@@ -62,3 +62,21 @@ It might be helpful to have a little program showing you what transactions remai
 ```shell
 echo 2020.ledger | entr -a -c -p -r ledger -w -f /_ reg Equity:Unknown
 ```
+
+Once you're done with this, commit!
+
+## Reformatting with a sort
+
+`ledger` contains a simple `print` command that writes transactions out in the most storage-efficient format possible. It can also use queries to limit what's printed or it can sort the output. Since our appended transactions may be out of order, let's use the opportunity to sort them by date, which is indicated by `d` in `ledger`'s format specifier syntax.
+
+It's a good idea to ensure that you've committed before doing this in case the sort messes up.
+
+```shell
+ledger -f 2020.ledger --sort d > 2020-s.ledger
+mv 2020-s.ledger 2020.ledger
+ledger -f 2020.ledger bal
+```
+
+If the sort worked and didn't alter your output, then commit again!
+
+We have to do file rename dance because `ledger` reads in a stream and outputs immediately, so we'd risk overwriting our log file!
