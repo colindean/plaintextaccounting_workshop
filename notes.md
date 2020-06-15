@@ -9,6 +9,7 @@ Here is a Brewfile for use with [Homebrew](https://brew.sh):
 brew 'ledger'
 brew 'entr'
 brew 'ledger-autosync'
+brew 'xsv'
 
 ```
 And some Python packages to install:
@@ -49,6 +50,18 @@ ledger-autosync \
   -l 2020.ledger \
   --unknown-account "Equity:Unknown" \
   export_20200615.csv >> 2020.ledger
+```
+
+### Cleaning data
+
+Sometimes, CSV isn't cleanly parseable. If you don't already know this, you will learn in the process of maintaining your finances that CSV is the worst format ever and that you should avoid it at all costs, both as a consumer and a producer.
+
+For example, Simple, one of my banks, emits CSV that Python's CSV library cannot reliably automatically determine its delimiter. So I use a convenient tool called `xsv` to sort it (because it comes in reverse order) and then add quotation marks explicitly in `clean_simple.sh`:
+
+```shell
+#!/usr/bin/env bash
+INPUT="$1"
+xsv sort --select Date "${INPUT}" | xsv fmt --quote-always > "$(basename -s .csv "${INPUT}")-sorted.csv"
 ```
 
 ## The tedium: categorizing transactions using accounts in your account tree
