@@ -78,6 +78,16 @@ echo 2020.ledger | entr -a -c -p -r ledger -w -f /_ reg Equity:Unknown
 
 Once you're done with this, commit!
 
+### Protips for categorizing quickly and efficiently
+
+This is the most laborious part of tracking your finances in _any_ accounting system, so you really want to find ways to optimize your workflow to _incentivize_ you to do it. Manual entry is the most rewarding yet tedious way to do this, so automating typing – especially when it comes transaction _amounts_ – is imporant to reduce the error-prone parts so you can focus your manual time on the categorization that is sometimes difficult to automate.
+
+When trying to figure out how to categorize transactions from the same vendor, try to **remember patterns in your spending**. For example, when a transaction is from a gas station and it's under $10.00, it's probably coffeee, so I categorize it as `Expenses:Coffee` because I track that separate from my `Expenses:Restaurants` when my primary reason for the purchase is, uh, go-go bean juice. If the gas station charge is between $20 and $40, it's 95% likely refueling my car with a 10 gallon tank. If the charge is over that, it's probably for my big SUV with its 25 gallon tank.
+
+**Make progress** when categorizing. If you can't figure out what a transaction is from the cryptic information your bank gives you, mark it with something and move on, e.g. `Equity:Unknown` for bank transaction records or `Expenses:Stuff` for credit card records. These two things help me mark transactions for which I need to look at receipts or go back to the bank's  activity records or statement to see if I can get more context about the purchase.
+
+**Use indicators in the cents of tipped charges** to help you remember what it was at a restaurant. For example, if you want to categorize a transaction as a restaurant charge, tip such that the total is something like $31.03, where 3¢ means it's `Expenses:Restaurant`. If you want to remind yourself that it's alcohol-only, make the total something like $31.04, where 4¢ means that it should be `Expenses:Alcohol`. You can even program an autoclassification tool to handle this for you at some step in your categorization workflow.
+
 ## Reformatting with a sort
 
 `ledger` contains a simple `print` command that writes transactions out in the most storage-efficient format possible. It can also use queries to limit what's printed or it can sort the output. Since our appended transactions may be out of order, let's use the opportunity to sort them by date, which is indicated by `d` in `ledger`'s format specifier syntax.
