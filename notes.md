@@ -78,6 +78,22 @@ echo 2020.ledger | entr -a -c -p -r ledger -w -f /_ reg Equity:Unknown
 
 Once you're done with this, commit!
 
+### Deduplicating inter-account transfers
+
+Inevitably, you'll have a transfer that touches two exports, for example a credit card payment that appears on both your bank statement and your credit card statement. You'll have to manually deduplicate them until [egh/ledger-autosync#101](https://github.com/egh/ledger-autosync/issues/101) is in and `ledger-autosync` is smarter about detecting possible transfers!
+
+This is the appropriate way to combine them:
+
+```ledger
+2019/03/28=2019/03/29 Citibank Costco Visa Payment
+    ; csvid: bc0c96d0c2aae6830cbfd20d8baf6c59
+    Assets:Cash:Banks:Dollar:Checking    -742.82 USD
+    ; ofxid: 2102.XXXXXXXXXXXX2321.20190328090097
+    Liabilities:CreditCard:Citi:Costco    742.82 USD
+```
+
+Note that the comment is in tag format and is above the posting it annotates. Dollar Bank gives me CSV while Citi gives me OFX. If I were run an import again against either export file, `ledger-autosync` _should_ catch it and not duplicate the transaction.
+
 ### Protips for categorizing quickly and efficiently
 
 This is the most laborious part of tracking your finances in _any_ accounting system, so you really want to find ways to optimize your workflow to _incentivize_ you to do it. Manual entry is the most rewarding yet tedious way to do this, so automating typing – especially when it comes transaction _amounts_ – is imporant to reduce the error-prone parts so you can focus your manual time on the categorization that is sometimes difficult to automate.
