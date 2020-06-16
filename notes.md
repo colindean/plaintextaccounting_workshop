@@ -82,17 +82,33 @@ Once you're done with this, commit!
 
 Inevitably, you'll have a transfer that touches two exports, for example a credit card payment that appears on both your bank statement and your credit card statement. You'll have to manually deduplicate them until [egh/ledger-autosync#101](https://github.com/egh/ledger-autosync/issues/101) is in and `ledger-autosync` is smarter about detecting possible transfers!
 
+```ledger
+2019/03/28 AUTOPAY THANK YOU
+    ; ofxid: 2102.XXXXXXXXXXXX2321.20190328090097
+    Liabilities:CreditCard:Citi:Costco    742.82 USD = 0.00 USD
+    Assets:Cash:Banks:Dollar:Checking
+
+2019/03/29 ECK CITIBANK PAYMENT
+    ; csvid: bc0c96d0c2aae6830cbfd20d8baf6c59
+    Assets:Cash:Banks:Dollar:Checking    -742.82 USD = 1,400.23 USD
+    Liabilities:CreditCard:Citi:Costco
+```
+
 This is the appropriate way to combine them:
 
 ```ledger
 2019/03/28=2019/03/29 Citibank Costco Visa Payment
     ; csvid: bc0c96d0c2aae6830cbfd20d8baf6c59
-    Assets:Cash:Banks:Dollar:Checking    -742.82 USD
+    Assets:Cash:Banks:Dollar:Checking    -742.82 USD = 1,400.23 USD
     ; ofxid: 2102.XXXXXXXXXXXX2321.20190328090097
-    Liabilities:CreditCard:Citi:Costco    742.82 USD
+    Liabilities:CreditCard:Citi:Costco    742.82 USD = 0.00 USD
 ```
 
+Note the date initialized and date cleared notation. This can be helpful to know when the transaction was started and when it actually completed. `ledger` generally knows how best to handle this internally when building its model of record.
+
 Note that the comment is in tag format and is above the posting it annotates. Dollar Bank gives me CSV while Citi gives me OFX. If I were run an import again against either export file, `ledger-autosync` _should_ catch it and not duplicate the transaction.
+
+Balance assertions are "hard mode" for `ledger`. While they can really help you checkpoint, they can be difficult to work with because of how they are processed. BAs are processed in _transaction record appearance order_, not in date order. When sorting, the transaction date is used, not the clearing date. This means that a BA might be off after sorting. I use a mental rule that as long as a BA worked before sorting, it's _probably_ safe to comment it out after sorting if it's causing problems because of transaction date ordering.
 
 ### Protips for categorizing quickly and efficiently
 
