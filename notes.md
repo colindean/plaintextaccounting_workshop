@@ -8,15 +8,19 @@ Here is a Brewfile for use with [Homebrew](https://brew.sh):
 # Brewfile for macOS and Linux
 brew 'ledger'
 brew 'entr'
-brew 'ledger-autosync'
 brew 'xsv'
 
 ```
 And some Python packages to install:
 
 ```
+# in requirements.txt
+# pip install -r requirements.txt -U
 ledger-autosync
+fava
 ```
+
+Yes, this is many dependencies across a few language ecosystems: C++, C, Rust, Python, Perl, and more. A strength of the Plaintext Accounting ecosystem is how easy it is to create tooling for it. While writing a parser takes some time, _producing_ Ledger-format transaction logs is an easy task for even new programers: it's a matter of outputting some text with appropriate whitespace between elements.
 
 ## `ledger-autosync` patterns
 
@@ -135,3 +139,60 @@ ledger -f 2020.ledger bal
 If the sort worked and didn't alter your output, then commit again!
 
 We have to do file rename dance because `ledger` reads in a stream and outputs immediately, so we'd risk overwriting our log file!
+
+## Viewing in Fava
+
+[Fava](https://beancount.github.io/fava/) is the best visualization tool for the Plaintext Accounting ecosystem. Unfortunately, it requires input in a specific variant of Ledger format called Beancount, a Ledger-like that uses a more explicit syntax. Fortunately, we can convert Ledger to Beancount and be able to use Fava fully.
+
+### Dependencies
+
+We have to install some things. 
+
+#### Fava
+
+First up, install Fava itself:
+
+    pip install fava
+
+#### ledger2beancount
+
+Next, we'll install `ledger2beancount`. This is a bit hefty for one little perl script, but it's the most robust way to convert and handle all of the magic that Ledger can do, but in the Beancount world. Read over the [installation instructions](https://github.com/beancount/ledger2beancount/blob/master/docs/installation.md) if you're not on Debian or Ubuntu or macOS.
+
+##### Debian or Ubuntu Linux
+
+If you're on Debian or Ubuntu, you can run `apt install ledger2beancount` to install it. 
+
+##### macOS
+
+If you're on macOS, we'll have to install from source.
+
+First, we'll install `cpanm` so we can install `ledger2beancount` dependencies and then install the program itself
+
+    brew install cpanminus    
+    curl -O ledger2beancount.zip https://github.com/beancount/ledger2beancount/archive/master.zip
+    unzip ledger2beancount.zip
+    cd ledger2beancount-master
+    cpanm --installdeps .
+
+That last step will take a while. It took about five minutes on my 2015 Macbook Pro.
+    
+### Converting to Beancount
+
+With ledger2beancount installed, you can run it after making your own configuration file.
+
+    cp ledger2beancount.yml myl2b.yml
+    # edit myl2b.yml
+    bin/ledger2beancount --config myl2b.yml my.ledger > my.beancount
+
+### Running Fava
+
+This one's simple!
+
+    fava my.beancount
+
+Fava will run a webserver accessible via [localhost:5000](http://localhost:5000). You can explore around the Fava interface, notably two views:
+
+1. Income Statement -> Net Profit. This is a cashflow analysis, Income minus Expenses.
+2. Balance Sheet -> Net Worth. This is a net worth analysis, Assets minus Liabilities.
+
+You may see some _errors_ on the left sidebar. ledger2beancount can't handle 100% of all things, so sometimes Beancount still works while silently failing. For example, balance assertions can be ambiguous, so ledger2beancount converts in a way that Beancount will continue to work but not enforce the assertions. It's OK, because any assertions you've made still guard your record in your original transaction log.
