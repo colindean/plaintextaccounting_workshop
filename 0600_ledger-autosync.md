@@ -4,46 +4,61 @@
 
 ## Updating a transaction record with new data
 
-`ledger-autosync` uses a _transaction id_ to uniquely identify transactions. When importing from QFX files, this transaction ID is provided by the exporting bank and _should_ always be trustworthy. When importing from CSV files, this transaction ID must be derived. It's generally simply a hash of all of the data in the row concatentated together, e.g.
+`ledger-autosync` uses a _transaction ID_ to uniquely identify transactions.
+When importing from QFX files, this transaction ID is provided by the exporting bank and _should_ always be trustworthy.
+When importing from CSV files, `ledger-autosync` must derive the transaction ID from the data if the definition of the format being read does not identify a transaction ID provided in the data.
+The derived transactions ID is a hash of all of the data in the row concatentated together.
+@Lst:csvid shows an example of how `ledger-autosync` does this.
+
+Listing: Python example showing how row IDs are generated {#lst:csvid}
 
 ```python
 from functools import reduce
 import hashlib
-
+# `row` is a list containing the columns from a single row
 smushed_row = reduce(lambda a,b: a + b, row).encode('utf-8')
 csv_id = hashlib.sha256(smushed_row).hexdigest()
 ```
 
-Run once on your exported CSV to visually check the output:
+Run once on your exported CSV to visually check the output using the command in @lst:export_show.
 
-```shell
+Listing: Showing the output of `ledger-autosync` running on export_20200615.csv {#lst:export_show}
+
+```bash
 ledger-autosync \
-  -a "Assets:Cash:Banks:Dollar:Checking" \
-  -l 2020.ledger \
-  --unknown-account "Equity:Unknown" \
-  export_20200615.csv
+    -a "Assets:Cash:Banks:Dollar:Checking" \
+    -l 2020.ledger \
+    --unknown-account "Equity:Unknown" \
+    export_20200615.csv
 ```
 
-then run it again and _append_ to your existing transaction record using output redirection `>>`:
+Then, run it again, but this time _append_ to your existing transaction record using output redirection `>>`, as shown in @lst:export_append.
 
-```shell
+Listing: Appending the output of `ledger-autosync` to a file {#lst:export_append}
+
+```bash
 ledger-autosync \
-  -a "Assets:Cash:Banks:Dollar:Checking" \
-  -l 2020.ledger \
-  --unknown-account "Equity:Unknown" \
-  export_20200615.csv >> 2020.ledger
+    -a "Assets:Cash:Banks:Dollar:Checking" \
+    -l 2020.ledger \
+    --unknown-account "Equity:Unknown" \
+    export_20200615.csv >> 2020.ledger
 ```
 
 ## Cleaning data
 
 Sometimes, CSV isn't cleanly parseable. If you don't already know this, you will learn in the process of maintaining your finances that CSV is the worst format ever and that you should avoid it at all costs, both as a consumer and a producer.
 
-For example, Simple, one of my banks, emits CSV that Python's CSV library cannot reliably automatically determine its delimiter. So I use a convenient tool called `xsv` to sort it (because it comes in reverse order) and then add quotation marks explicitly in `clean_simple.sh`:
+For example, Simple, one of my banks, emits CSV that Python's CSV library cannot reliably automatically determine its delimiter. So I use a convenient tool called `xsv` to sort it (because it comes in reverse order) and then add quotation marks explicitly in `clean_simple.sh`, shown in @lst:cleancsv.
 
-```shell
+Listing: clean_simple.sh {#lst:cleancsv}
+
+```bash
 #!/usr/bin/env bash
 INPUT="$1"
-xsv sort --select Date "${INPUT}" | xsv fmt --quote-always > "$(basename -s .csv "${INPUT}")-sorted.csv"
+xsv sort --select Date "${INPUT}" | \
+  xsv fmt --quote-always > \
+    "$(basename -s .csv "${INPUT}")-sorted.csv"
+
 ```
 
 ## The tedium: categorizing transactions using accounts in your account tree
@@ -54,7 +69,7 @@ Don't worry too much about formatting. We'll use `ledger` itself to reformat and
 
 It might be helpful to have a little program showing you what transactions remain to be categorized. [`entr`](http://eradman.com/entrproject/) is a great little tool for watching files for changes and running a command when they change:
 
-```shell
+```bash
 echo 2020.ledger | entr -a -c -p -r ledger -w -f /_ reg Equity:Unknown
 ```
 
@@ -62,7 +77,11 @@ Once you're done with this, commit!
 
 ## Deduplicating inter-account transfers
 
-Inevitably, you'll have a transfer that touches two exports, for example a credit card payment that appears on both your bank statement and your credit card statement. You'll have to manually deduplicate them until [egh/ledger-autosync#101](https://github.com/egh/ledger-autosync/issues/101) is in and `ledger-autosync` is smarter about detecting possible transfers!
+Inevitably, you'll have a transfer that touches two exports, for example a credit card payment that appears on both your bank statement and your credit card statement.
+@Lst:dedup-before shows what this can look like in your transaction record.
+You'll have to manually deduplicate them until [egh/ledger-autosync#101](https://github.com/egh/ledger-autosync/issues/101) is in and `ledger-autosync` is smarter about detecting possible transfers!
+
+Listing: Transaction record before deduplication {#lst:dedup-before}
 
 ```ledger
 2019/03/28 AUTOPAY THANK YOU
@@ -76,7 +95,9 @@ Inevitably, you'll have a transfer that touches two exports, for example a credi
     Liabilities:CreditCard:Citi:Costco
 ```
 
-This is the appropriate way to combine them:
+@Lst:dedup-after shows the appropriate way to combine them.
+
+Listing: Transaction record after deduplication {#lst:dedup-after}
 
 ```ledger
 2019/03/28=2019/03/29 Citibank Costco Visa Payment
@@ -108,7 +129,7 @@ When trying to figure out how to categorize transactions from the same vendor, t
 
 It's a good idea to ensure that you've committed before doing this in case the sort messes up.
 
-```shell
+```bash
 ledger -f 2020.ledger --sort d > 2020-s.ledger
 mv 2020-s.ledger 2020.ledger
 ledger -f 2020.ledger bal

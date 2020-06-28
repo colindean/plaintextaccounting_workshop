@@ -4,26 +4,42 @@ Let's install some software that you'll need in order to work through this works
 
 There are many dependencies across a few language ecosystems: C++, C, Rust, Python, Perl, and more. A strength of the Plaintext Accounting ecosystem is how easy it is to create tooling for it. While writing a parser takes some time, _producing_ Ledger-format transaction logs is an easy task for even new programers: it's a matter of outputting some text with appropriate whitespace between elements.
 
-| Software           | Utility                                                        | Website                                       |
-|--------------------|----------------------------------------------------------------|-----------------------------------------------|
-| `ledger`           | The original plaintext accounting program                      | https://ledger-cli.org                        |
-| `entr`             | Runs a command when any in a set of files change               | http://eradman.com/entrproject/               |
-| `xsv`              | CSV querying and manipulation tool                             | https://github.com/BurntSushi/xsv             |
-| `ledger-autosync`  | Converts CSV and QFX/OFX to Ledger format                      | https://github.com/egh/ledger-autosync        |
-| `fava`             | Web-based transaction exploration tool for Beancount ledgers   | https://beancount.github.io/fava/             |
-| `ledger2beancount` | Converts Ledger-format transaction records to Beancount format | https://github.com/beancount/ledger2beancount |
+Table: Great tools for exploring the Plain Text Accounting ecosystem {#tbl:tool-list}
+
+-----------------------------------------------------------------------------------------------------
+Software           Utility                              Website
+------------------ ------------------------------------ ---------------------------------------------
+`ledger`           The original plain text              https://ledger-cli.org
+                   accounting program
+
+`entr`             Runs a command when any in           https://eradman.com/entrproject/
+                   a set of files change
+
+`xsv`              CSV querying and manipulation tool   https://github.com/BurntSushi/xsv
+
+`ledger-autosync`  Converts CSV and QFX/OFX             https://github.com/egh/ledger-autosync
+                   to Ledger format
+
+`fava`             Web-based transaction exploration    https://beancount.github.io/fava/
+                   tool for Beancount ledgers
+
+`ledger2beancount` Converts Ledger-format transaction   https://github.com/beancount/ledger2beancount
+                   records to Beancount format
+-----------------------------------------------------------------------------------------------------
 
 ## Install with a package manager
 
-While you could install each of these programs separately, it's easiest to do that in a package manager, such as one of the following:
+While you could install each of these programs in @tbl:tool-list separately, it's easiest to do that in a package manager. [Homebrew](https://brew.sh) is the package manager used in examples in this section and the remainder of the workshop. Other package managers described in @tbl:os-pkgman may contain the software necessary to complete this workshop.
+
+Table: Operating system package manager support {#tbl:os-pkgman}
 
 |Operating System|Supported for Workshop?[^os-support-notice]|Recommendation|
-|-----|--------|----|
-|macOS|Yes|[Homebrew](https://brew.sh)|
-|Linux|Partially|[Homebrew](https://brew.sh) or your distro's package manager|
+|------|--------|----|
+|macOS|Yes|Homebrew|
+|Linux|Partially|Homebrew or your distro's package manager|
 | ChromeOS | Partially | Use [Linux (Beta) mode](https://support.google.com/chromebook/answer/9145439) to install Linux packages and then use [Homebrew](https://brew.sh)  or [Chromebrew](https://skycocker.github.io/chromebrew/) to access other packages. |
 |Windows | Partially | Install [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10) or use a Linux VM, then follow Linux instructions |
-| Android | No | Please use a desktop operating system for this workshop. |
+| Android | No | [Termux](https://termux.com/) |
 |iOS | No | Please use a desktop operating system for this workshop. |
 | Others| No | You probably know what you're doing
 
@@ -33,9 +49,11 @@ Not all dependencies may be available through each package manager, and dependen
 
 ### Homebrew
 
-Here is a Brewfile for use with [Homebrew](https://brew.sh):
+If you've not already installed Homebrew, follow the instructions at <https://brew.sh> to install it.
 
-```ruby
+@Lst:brewfile contains `Brewfile` for use with Homebrew. Write its contents to a file called `Brewfile` and then run `brew bundle` to install the software.
+
+```{#lst:brewfile .ruby caption="Brewfile"}
 # Brewfile for macOS and Linux
 brew 'ledger'
 brew 'entr'
@@ -45,9 +63,9 @@ brew 'python'
 
 ### Python's `pip`
 
-After you've installed those packages, you'll need to install some Python packages with `pip`:
+After you've installed those packages, you'll need to install some Python packages with [`pip`](https://pypi.org/project/pip/), the package installer for the Python Package Index. Write the contents of @lst:requirements-txt to a file named `requirements.txt` and follow the instruction in the comments to execute the installation process.
 
-```
+```{#lst:requirements-txt caption="requirements.txt"}
 # put this into requirements.txt then run
 #     pip install -r requirements.txt -U
 #
@@ -57,6 +75,10 @@ fava
 
 ### Other dependencies to be manually installed
 
-| Dependency         | How to install                    |
-|--------------------|-----------------------------------|
-| `ledger2beancount` | See @Sec:install_ledger2beancount |
+Most of the dependencies listed here are optional. They are required only for one activity and _may_ be omitted or installed when reaching that relevant module of the workshop.
+
+Table: Manually installed dependencies #{tbl:manually-installed}
+
+| Dependency         | Required for | How to install                    |
+|--------------------|--------------|---------------------|
+| `ledger2beancount` | @Sec:use_ledger2beancount | @Sec:install_ledger2beancount |

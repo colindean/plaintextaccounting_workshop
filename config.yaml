@@ -1,0 +1,54 @@
+---
+from: markdown+autolink_bare_uris
+
+metadata:
+  # document metadata
+  title: "Command-line finances using the Plain Text Accounting ecosystem"
+  subtitle: "A workshop"
+  author: ["Colin Dean"]
+  subject: "Plaintext Accounting"
+  keywords:
+    - plain text accounting
+    - ledger
+    - personal finance
+  thanks: |
+    Thank you to John Wiegley, author of Ledger, for starting a revolution
+    freeing personal and business finances from the walled garden of
+    proprietary software.
+
+    Thank you to Simon Michael, author of hledger and maintainer of
+    plaintextaccounting.org, for turning a single tool into an ecosystem
+    with a standard.
+
+    Thank you to my parents, who involved me in financial decisions from
+    and early age, teaching me how to save money and keep track of my money
+    even when theirs was exceptionally tight.
+
+    And lastly, thank you to you who are seeking to improve how you live your
+    life. May your thirst for knowledge be quenched by this workshop, and I
+    hope that you will contribute back to the Plaintext Accounting ecosystem
+    by sharing your knowledge as I have shared mine.
+  # filter metadata
+  # crossrefYaml: pandoc-crossref.yaml
+
+variables:
+  # physical paper and layout settings
+  documentclass: report
+  papersize: letter
+  geometry:
+    - margin=1in
+  lof: true
+  lot: true
+  toc: true
+  fontfamily: 'sourceserifpro'
+  colorlinks: true
+  links-as-notes: true
+
+  # page stylings
+  pagestyle: headings
+
+number-sections: true
+
+pdf-engine: xelatex
+filters:
+  - pandoc-crossref

@@ -1,0 +1,5 @@
+# move into config.yaml when this is fixed:
+# https://github.com/lierdakil/pandoc-crossref/issues/259
+codeBlockCaptions: true
+linkReferences: true
+nameInLink: true
