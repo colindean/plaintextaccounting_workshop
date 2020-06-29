@@ -5,6 +5,7 @@ OUTPUTS=$(PDF_OUTPUT)
 
 CONFIG=config.yaml
 MD_FILES=$(sort $(wildcard 0*.md))
+LEDGER_FILES=$(sort $(wildcard *.ledger))
 
 all: $(OUTPUTS)
 
@@ -21,4 +22,4 @@ open: $(PDF_OUTPUT)
 
 .PHONY: watch
 watch:
-	ls Makefile $(MD_FILES) $(CONFIG) | entr -napr make $(PDF_OUTPUT)
+	ls Makefile $(MD_FILES) $(CONFIG) $(LEDGER_FILES) | entr -napr make $(PDF_OUTPUT)

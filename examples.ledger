@@ -1,0 +1,41 @@
+2017-06-20 Opening Balances
+  Assets:Cash:Wallet                   3.50
+  Assets:Cash:Bank:Checking          536.35
+  Assets:Cash:Bank:Savings          3014.12
+  Liabilities:CreditCards:Costco    -235.13
+  Equity:OpeningBalances
+
+2017-06-26 Commonplace Coffee
+  Expenses:Restaurants:Coffee   3.00
+  Assets:Cash:Wallet           -3.00
+
+2017-06-27 Commonplace Coffee
+  Expenses:Restaurants:Coffee   3.00
+  Assets:Cash:Wallet
+
+2017-06-27 Commonplace Coffee
+  ; cold brew
+  Expenses:Restaurants:Coffee     3.00
+  Liabilities:CreditCards:Costco
+
+2017-06-30 Spacely Sprockets
+  ; payday!
+  Income:SpacelySprockets     -2000.00
+  Assets:Cash:Bank:Checking    2000.00
+
+2017-07-15 Spacely Sprockets
+  ; payday!
+  Income:SpacelySprockets     -2000.00
+  Assets:Cash:Bank:Checking    2000.00
+
+2017-07-15 Transfer to Savings
+  Assets:Cash:Bank:Checking   -100.00
+  Assets:Cash:Bank:Savings     100.00
+
+2017-07-30 Spacely Sprockets
+  ; payday with taxes
+  Income:SpacelySprockets     -2735.00
+  Expenses:Taxes:Federal:EIT    500.00
+  Expenses:Taxes:Federal:FICA   200.00
+  Expenses:Taxes:State:EIT       35.00
+  Assets:Cash:Bank:Checking    2000.00
