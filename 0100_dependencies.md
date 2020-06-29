@@ -82,3 +82,23 @@ Table: Manually installed dependencies #{tbl:manually-installed}
 | Dependency         | Required for | How to install                    |
 |--------------------|--------------|---------------------|
 | `ledger2beancount` | @Sec:use_ledger2beancount | @Sec:install_ledger2beancount |
+
+## Versions
+
+Aspects of this workshop description are built against certain versions of the dependencies.
+The listings below reflect the versions of the software used. Most of the dependencies should
+work at any version available as of the date of this workshop on the title page, though.
+
+Listing: Versions of software used in this workshop
+
+```pipe
+echo "# ledger"
+ledger --version | head -n 1
+echo "# entr"
+entr 2>&1 | head -n 1
+echo "# xsv"
+xsv --version
+echo "# python"
+python --version
+```
+
