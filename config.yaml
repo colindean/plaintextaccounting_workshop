@@ -6,7 +6,7 @@ metadata:
   title: "Command-line finances using the Plain Text Accounting ecosystem"
   subtitle: "A workshop"
   author: ["Colin Dean"]
-  subject: "Plaintext Accounting"
+  subject: "Plain Text Accounting"
   keywords:
     - plain text accounting
     - ledger
@@ -30,6 +30,7 @@ metadata:
     by sharing your knowledge as I have shared mine.
   # filter metadata
   # crossrefYaml: pandoc-crossref.yaml
+include-before-body: ['LICENSE.tex']
 
 variables:
   # physical paper and layout settings

@@ -89,7 +89,7 @@ Aspects of this workshop description are built against certain versions of the d
 The listings below reflect the versions of the software used. Most of the dependencies should
 work at any version available as of the date of this workshop on the title page, though.
 
-Listing: Versions of software used in this workshop
+Listing: Versions of software used in this workshop {#lst:versions}
 
 ```pipe
 echo "# ledger"
