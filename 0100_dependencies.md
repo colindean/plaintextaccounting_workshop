@@ -75,9 +75,9 @@ fava
 
 ### Other dependencies to be manually installed
 
-Most of the dependencies listed here are optional. They are required only for one activity and _may_ be omitted or installed when reaching that relevant module of the workshop.
+Most of the dependencies listed in @tbl:manually-installed are optional. They are required only for one activity and _may_ be omitted or installed when reaching that relevant module of the workshop.
 
-Table: Manually installed dependencies #{tbl:manually-installed}
+Table: Manually installed dependencies {#tbl:manually-installed}
 
 | Dependency         | Required for | How to install                    |
 |--------------------|--------------|---------------------|
