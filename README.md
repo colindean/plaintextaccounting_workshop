@@ -8,6 +8,19 @@ is especially true of the tables.
 
 ## Contributing
 
+Some `pandoc` filters easily available are required:
+
+```
+brew install pandoc-crossref
+```
+
+and not so easily available:
+
+* [`pandoc-include-code`](https://github.com/owickstrom/pandoc-include-code)
+* [`panpipe`](https://hackage.haskell.org/package/panpipe) ([git](http://chriswarbo.net/git/panpipe/git/index.html))
+
+**TODO:** Make Homebrew formulae for these and submit them upstream.
+
 Run `make open` to compile the PDF and open it in a PDF viewer.
 
 Run `make watch` to start an edit-compile loop.
