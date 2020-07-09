@@ -16,7 +16,7 @@ $(PDF_OUTPUT): $(MD_FILES) $(CONFIG) $(LICENSE_TEX)
 		--defaults $(CONFIG) \
 		$(MD_FILES) \
 		-o $@ \
-		-M "date=v$(date +%Y.%m.d)" \
+		-M "date=v$(shell date +%Y.%m.%d)$(PATCH)" \
 		-M "crossrefYaml=pandoc-crossref.yaml"
 
 .PHONY: open
@@ -28,4 +28,4 @@ open: $(PDF_OUTPUT)
 
 .PHONY: watch
 watch:
-	ls Makefile $(MD_FILES) $(CONFIG) $(LEDGER_FILES) $(LICENSE_TEX) $(LICENSE_TEX:%.tex=%.md) | entr -napr make $(PDF_OUTPUT)
+	ls Makefile $(MD_FILES) $(CONFIG) $(LEDGER_FILES) $(LICENSE_TEX) $(LICENSE_TEX:%.tex=%.md) | entr -napr make $(PDF_OUTPUT) PATCH=-wip

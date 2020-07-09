@@ -64,5 +64,5 @@ pdf-engine: xelatex
 filters:
   - pandoc-crossref
   - pandoc-include-code
-  - filter-pipe.lua
-
+  # - filter-pipe.lua
+  - panpipe

@@ -30,8 +30,14 @@ Lines 9 and 8 shows a _posting_ comprised of an _account_ and an _amount_.
 All transactions must balance. That is, the amount credited must
 equal the amount debited: credits minus debits must equal zero.
 
-`ledger` allows transactions to omit the _amount_ on a single _posting_, as
-shown in @lst:basics_basic_omitamount.
+Note the _accounts_ used in this example.
+One begins with `Expenses` and the other begins with `Assets`.
+Expenses are _credited_ because the money flows _toward_ them.
+Assets are credited when you add funds and debited when you move money to something else.
+In this transaction, you're deducting money from an account representing your wallet and adding it to an expense representing your coffee spending.
+
+`ledger` has some great conveniences that ease entry.
+One such convenience is that `ledger` allows transactions to omit the _amount_ on a single _posting_, as shown in @lst:basics_basic_omitamount.
 The missing amount is calculated and is equal to whatever amount is necessary
 to balance the transaction.
 
@@ -46,12 +52,12 @@ you want.
 A comment in the format `key: value` creates a transaction _tag_ accessible in
 queries. You'll learn more about that in @sec:querying_tagged_transactions.
 
-List: A basic transaction with a comment {#lst:basics_basic_comment}
+Listing: A basic transaction with a comment {#lst:basics_basic_comment}
 
 ```{.ledger include="examples.ledger" startLine=16 endLine=19 .numberLines}
 ```
 
-### Querying your Transaction Records
+## Querying your Transaction Records with Reports
 
 There are two types of basic reports in `ledger`:
 
@@ -64,15 +70,62 @@ It should look like the contents of @lst:basics_balance.
 
 Listing: Balance report for @lst:basics_basic {#lst:basics_balance}
 
-```pipe
-ledger -f examples.ledger balance --begin 2017/06/26 --end 2017/06/27
+```{pipe="sh"}
+ledger -f root/examples.ledger balance --begin 2017/06/26 --end 2017/06/27
 ```
 Then, run `ledger --file 1.ledger register` to see the register report.
 It should look like the contents of @lst:basics_register.
 
 Listing: Register report for @lst:basics_basic {#lst:basics_register}
 
-```pipe
-ledger -f examples.ledger balance --begin 2017/06/26 --end 2017/06/27
+```{pipe="sh"}
+ledger -f root/examples.ledger register --begin 2017/06/26 --end 2017/06/27
 ```
 
+@Lst:examples shows a more realistic transaction log. Write it to a file
+`examples.ledger` so that you can use it for some querying experimentation.
+
+Listing: A fuller example {#lst:examples}
+
+```{pipe="sh | ledger -f - print | tee ex.ledger"}
+cat root/examples.ledger
+```
+
+Run `ledger -f ex.ledger balance` to see the balance report and
+run `ledger -f ex.ledger register` to see the register report.
+@Lst:examples_bal and @lst:examples_reg reflect what you'll see.
+
+Listing: Examples basic balance report {#lst:examples_bal}
+```{pipe="sh" }
+ledger -f ex.ledger balance
+```
+
+Listing: Examples basic register report {#lst:examples_reg}
+```{pipe="sh"}
+ledger -f ex.ledger register
+```
+
+## Other Reports
+
+* `cleared` : Shows a special `balance` view that more visibly shows balances
+              when there are transactions that have not yet cleared, e.g. a
+              check is in the mail.
+* `equity`: Prints current account balances as a single transaction.
+            Useful for summarizing previous years as an opening balances
+            transaction on a fresh ledger.
+
+
+## Keeping a Tidy Transaction Log
+
+* `print` : Prints all transactions nicely formatted with the minimal text
+            necessary to represent the transaction. Useful for sorting
+            transactions that were entered out of order.
+
+## Exporting for Other Programs
+
+
+While the Plain Text Ecosystem has a lot of useful tools,
+a few other commands facilitate interacting with other programs.
+
+* `csv` : Outputs transactions in CSV format.
+* `xml` : Outputs transactions in XML format.

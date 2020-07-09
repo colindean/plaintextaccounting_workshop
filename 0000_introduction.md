@@ -11,7 +11,7 @@ Plain Text Accounting is the practice of maintaining an accounting ledger in a f
 This workshop is geared toward folks with the following skills:
 
 1. Comfortability with basic algebra
-2. Comfortability using a computer with a suitable keyboard or other input method for typing
+2. Comfortability using a computer with a suitable keyboard or another input method for typing
 3. Comfortability using a text editor program, such as Atom, Visual Studio Code, vim, or Emacs
 4. Comfortability installing and using command line software on the operating system of their choice
 
@@ -24,7 +24,7 @@ and the following things available to them:
 
 Developers throughout the world are often highly-compensated professionals. By carefully capturing and documenting the flow of one's money, these professionals can avoid mismanaging their personal finances and squandering the assets at their disposal, preserving more funds for important things like debt repayment, retirement investment, vacations, and charitable contributions. This talk introduces personal finance accounting in general and moves into teaching how to use the open source plain text accounting ecosystem to manage one's money.
 
-The majority of tools in this ecosystem and free and open source software, meaning you can rely on them to always be freely available to you for your use, modification, and, in most cases, redistribution. The absence of lock-in means you own your data
+The majority of tools in this ecosystem and free and open-source software, meaning you can rely on them to always be freely available to you for your use, modification, and, in most cases, redistribution. The absence of lock-in means you own your data
 without concern for being locked out of your hard work because of a price increase or service outage.
 
 ## Workshop goals
