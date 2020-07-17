@@ -44,19 +44,12 @@ variables:
   fontfamily: 'sourceserifpro'
   colorlinks: true
   links-as-notes: true
-  include-in-header: |
-    \usepackage{fancyhdr}
-    \pagestyle{fancy}
-    \fancyhead[LO,RE]{\leftmark}
-    \fancyhead[LE,RO]{}
-    \fancyfoot[C]{\thepage}
-    \fancyfoot[LO,RE]{\tiny{\textcopyright{} Colin Dean. Licensed under CC BY-NC-SA 4.0.}}
-    \fancyfoot[LE,RO]{\tiny{\thetitle}}
-    \renewcommand{\headrulewidth}{1pt} % non-default, 0.4 is default
-    \renewcommand{\footrulewidth}{1pt} % non-default
-
   # page stylings
   pagestyle: headings
+
+#include-in-header:
+#  - headers.tex
+
 
 number-sections: true
 

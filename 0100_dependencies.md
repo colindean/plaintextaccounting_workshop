@@ -91,7 +91,7 @@ work at any version available as of the date of this workshop on the title page,
 
 Listing: Versions of software used in this workshop {#lst:versions}
 
-```pipe
+```{pipe="sh"}
 echo "# ledger"
 ledger --version | head -n 1
 echo "# entr"
