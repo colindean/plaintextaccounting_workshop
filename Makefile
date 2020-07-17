@@ -26,6 +26,12 @@ open: $(PDF_OUTPUT)
 %.tex: %.md
 	pandoc --from=markdown+autolink_bare_uris --to=latex $< -o $@
 
+WATCHABLES=Makefile $(MD_FILES) $(CONFIG) $(LEDGER_FILES) $(LICENSE_TEX:%.tex=%.md)
+
 .PHONY: watch
 watch:
-	ls Makefile $(MD_FILES) $(CONFIG) $(LEDGER_FILES) $(LICENSE_TEX) $(LICENSE_TEX:%.tex=%.md) | entr -napr make $(PDF_OUTPUT) PATCH=-wip
+	ls $(WATCHABLES) $(LICENSE_TEX) | entr -napr make $(PDF_OUTPUT) PATCH=-wip
+
+.PHONY: gitadd
+gitadd:
+	git add $(WATCHABLES)

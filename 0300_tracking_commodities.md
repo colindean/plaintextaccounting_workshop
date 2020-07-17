@@ -3,7 +3,7 @@
 ## What is a Commodity?
 
 
-## A Home as a Commodity
+## A Home as a Commodity {#sec:commodity_home}
 
 A commodity could be a house, condominium, or other ownable real property!
 It's all in how you represent it in your transaction log.
