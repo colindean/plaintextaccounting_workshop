@@ -28,6 +28,11 @@
   Income:SpacelySprockets     -2000.00
   Assets:Cash:Bank:Checking    2000.00
 
+2017-07-15 Commonplace Coffee
+  ; type: cold brew
+  Expenses:Restaurants:Coffee     3.00
+  Liabilities:CreditCards:Costco
+
 2017-07-15 Transfer to Savings
   Assets:Cash:Bank:Checking   -100.00
   Assets:Cash:Bank:Savings     100.00
@@ -39,3 +44,8 @@
   Expenses:Taxes:Federal:FICA   200.00
   Expenses:Taxes:State:EIT       35.00
   Assets:Cash:Bank:Checking    2000.00
+
+2017-07-30 Commonplace Coffee
+  ; type: cappucino
+  Expenses:Restaurants:Coffee     3.00
+  Liabilities:CreditCards:Costco

@@ -82,6 +82,20 @@ It is essentially a label to distinguish balances in different systems and
 different amounts of a different object!
 You'll learn more on commodities in @sec:commodities.
 
+Line 11 in @lst:common_transactions notes an effective date relationship.
+This says that the transaction started on `2020/07/15` but it wasn't effective
+until `2020/07/23`. This is useful for tracking when a posting was debited
+and when the other was credited. You can sort by the effective date, too.
+See the [`ledger` docs on Effective Dates](https://www.ledger-cli.org/3.0/doc/ledger3.html#Effective-Dates) for a more in-depth explanation.
+
+The last line in @lst:common_transactions includes a _balance assertion_.
+This is a powerful way to assert that, after this posting and transaction are processed, the balance of this particular account should be a known amount.
+This is tremendously useful for reconciliation with statements but can also be a source of pain during manual entry.
+Treat balance assertions like regression tests – tests that warn when fixed bugs come back – and use them when you are really certain about a balance.
+This workshop doesn't use balance assertions beyond this because of the
+inherent difficulty in tracking them down.
+Learning to use them is an exercise left to the reader!
+
 Listing: Common transaction examples {#lst:common_transactions}
 
 ```{.ledger pipe="ledger -f - print | tee walkthrough.ledger" .numberLines}
@@ -98,7 +112,7 @@ Listing: Common transaction examples {#lst:common_transactions}
 2020-07-15=2020-07-23 IRS Tax Due
   ; check_number: 1700
   * Expenses:Taxes:EarnedIncome:Federal    64.00 USD
-  ! Assets:Cash:Banks:Dollar              -64.00 USD
+  ! Assets:Cash:Banks:Dollar              -64.00 USD = -128.00 USD
 
 ```
 

@@ -40,6 +40,17 @@ In this presentation, you'll learn
 * how to build informative reports with HTML, SVG, PDFs, and more
 * how to securely backup your financial data stored as plain text
 
+Anti-goals, or things you won't learn or things specifically avoided in this
+workshop:
+
+* how to compile from source most of the tools used, since most are available
+    in binary form through a package manager. Only those unavailable are
+    explained in this workshop.
+* how to use _everything_ that `ledger` has to offer, since `ledger` is an
+    in-depth program with a variety of modes that not even the author uses
+    frequently, and this should not take the place of the
+    [`ledger` documentation](https://www.ledger-cli.org/3.0/doc/ledger3.html).
+
 ## Workshop agenda
 
 This workshop will take approximately 150 minutes.
@@ -47,10 +58,10 @@ This workshop will take approximately 150 minutes.
 Time breakdown:
 
 * 45 minutes: Presentation of GAAP, double-entry accounting basics, `ledger` format basics, and why `ledger`
-* 5 minutes: break!
+* 10 minutes: Q&A and break
 * 45 minutes: Collecting data, experimenting with `ledger`
-* 5 minutes: break!
-* 50 minutes: Building and automating reports
+* 5 minutes: break
+* 45 minutes: Building and automating reports
 
 If any time remains, you can work through an optional module exploring time tracking using `ledger`.
 
