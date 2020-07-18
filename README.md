@@ -11,7 +11,7 @@ is especially true of the tables.
 Some `pandoc` filters easily available are required:
 
 ```
-brew install pandoc-crossref pandoc-include-code
+brew install pandoc-crossref pandoc-include-code pandoc aha make
 ```
 
 and not so easily available:
