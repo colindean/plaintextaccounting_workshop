@@ -11,13 +11,12 @@ is especially true of the tables.
 Some `pandoc` filters easily available are required:
 
 ```
-brew install pandoc-crossref
+brew install pandoc-crossref pandoc-include-code
 ```
 
 and not so easily available:
 
-* [`pandoc-include-code`](https://github.com/owickstrom/pandoc-include-code)
-* [`panpipe`](https://hackage.haskell.org/package/panpipe) ([git](http://chriswarbo.net/git/panpipe/git/index.html))
+* [`panpipe`](https://hackage.haskell.org/package/panpipe "warning: takes forever to compile all dependencies and install") ([git](http://chriswarbo.net/git/panpipe/git/index.html))
 
 **TODO:** Make Homebrew formulae for these and submit them upstream.
 
