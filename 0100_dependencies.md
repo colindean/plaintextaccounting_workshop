@@ -1,4 +1,4 @@
-# Install Dependencies
+# Install Dependencies {#sec:dependencies}
 
 Let's install some software that you'll need in order to work through this workshop. It's easiest to install the basics upfront so that you can continue the workshop even if you may be offline later.
 
@@ -59,6 +59,7 @@ brew 'ledger'
 brew 'entr'
 brew 'xsv'
 brew 'python'
+brew 'make'
 ```
 
 ### Python's `pip`
@@ -100,5 +101,7 @@ echo "# xsv"
 xsv --version
 echo "# python"
 python --version
+echo "# make"
+make -v
 ```
 

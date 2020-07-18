@@ -56,9 +56,18 @@ reports.
 
 ## Thinking in Reports
 
-## A Brief Introduction to `make`
+When using `ledger` and other plain text accounting tools, think in reports:
+the results of a query of data presented in a particular format.
+Each report has meaning and reusability.
+So far, you've read about four different kinds of reports that are the most common for basic personal finance:
 
-## Setting Up a `Makefile` for use with `ledger`
+1. A generalized or account-scoped balance report
+2. A generalized or account-scoped register report
+3. A paired short-term balance report: cash flow (@sec:cashflow)
+4. A paired long-term balance report: net worth (@sec:networth)
 
-## Solidifying Report Generation
+Each of these is comprised of a single query and a single output.
+If we put the output of each of these queries into a file, we
+can use and reuse these files to create a really cool unified report
+comprised of these and other reports.
 

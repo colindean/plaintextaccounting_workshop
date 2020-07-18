@@ -50,12 +50,17 @@ variables:
 #include-in-header:
 #  - headers.tex
 
+bibliography:
+  - refs.bibtex
 
 number-sections: true
 
 pdf-engine: xelatex
 filters:
   - pandoc-crossref
+  - pandoc-citeproc
   - pandoc-include-code
   # - filter-pipe.lua
   - panpipe
+
+preserve-tabs: true
