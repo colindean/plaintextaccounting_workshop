@@ -110,6 +110,13 @@ raw: $(LEDGER_FILE) ## run a query with make raw Q="bal" or drops into console m
 cash: $(LEDGER_FILE) ## show only cash assets
 	$(LEDGER_CMD) balance ^Assets:Cash
 
+investments: $(LEDGER_FILE) ## show only investments
+	$(LEDGER_CMD) balance ^Assets:Investments
+
+reimbursements: $(LEDGER_FILE) ## show only reimbursements
+	$(LEDGER_CMD) balance ^Assets:Reimbursements
+
+
 ## end terminal viewing tasks
 ```
 
@@ -133,7 +140,42 @@ it's more than likely that the next person will be yourself.
   in a musical context. Try injecting _that_ into a technical conversation
   sometime.
 
-Let's examine some of these tasks beyond their help text.
+Let's examine some of these tasks in @lst:makefile_terminal beyond their help text.
+
+Lines 3-4's task is the basic `balance` report: "show me all balances for all data".
+Lines 6-10 provide you with net worth, but a limited view on the `networth` task
+because listing all assets might get long if you have a lot of `Assets:Cash`
+subaccount accounts (`Assets:Cash:Banks`, perhaps a checking and a savings
+account for each bank; `Assets:Cash:Online` for things like PayPal, Venmo,
+Square Cash App, and so on.) or a lot of `Assets:Investments` accounts such as
+employer 401(k)s, IRAs, and other things that you may not care about at a finer
+detail than "all investments" most of the time when looking at your net worth
+statement.
+
+Lines 15-16 provide a way to see only expenses and only those that are not
+normal paycheck deductions such as income taxes and insurances.
+This report is useful to see expenses I actively control, be they automatic
+bill payments or normal daily transactions.
+It's important to separate these because for those with a savings mentality,
+taxes may be a significant portion of yearly expenses.
+
+Lines 18-19 help this author know what accounts need to be checked regularly.
+Note the usage of the `accounts` report.
+Lines 21-22 provide the ability to run a raw query by simply passing whatever
+is in the `Q` environment variable to `ledger`.
+For example, `make raw Q="balance ^Assets:Cash"` would execute the same report
+as what's on lines 24-25.
+The remaining tasks in @lst:makefile_terminal are shortcuts for investments
+balances and `Assets:Reimbursements`, a great account to track loans made to
+friends or to your employer if you covered an expenses on a personal credit
+card instead of a company credit card [^churning].
+
+[^churning]: There's a whole practice to this called "churning" that not only
+  involves charging company expenses on a personal card but also finding ways
+  to take advantage of rewards programs to earn significant travel perks for
+  personal use. If you will ever travel for work, this is a cool thing to look
+  into in order to be able to spend some vacation time somewhere you want to
+  go.
 
 Finally, your `Makefile` should look like @lst:makefile_final.
 
@@ -141,6 +183,13 @@ Listing: The finalized basic `Makefile` for a `ledger` project {#lst:makefile_fi
 
 ```{.makefile pipe="cat Makefile.*.txt | tee Makefile.basic" .numberLines}
 ```
+
+#### Experimentation
+
+Spend some time using the `Makefile` that you've created.
+Rename `ex.ledger` to `2020.ledger`.
+Try each of the tasks to get a feel for the output of each.
+If you need to, add some transactions in order to generate data.
 
 ### Report File Generation
 
