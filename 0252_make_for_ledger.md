@@ -45,7 +45,7 @@ LEDGER_FILE = $(YEAR).ledger
 # with the file already populated, plus a convenient way to inject
 # eXtra arguments into the command as a one-off. This is a great way
 # to test new commands.
-LEDGER = $(LEDGER_BIN) -f $(LEDGER_FILE) $(X)
+LEDGER = $(LEDGER_BIN) --file $(LEDGER_FILE) $(X)
 
 ```
 
@@ -353,7 +353,7 @@ serially, and `make -j 8 statement`, which runs reports in parallel before
 building the final document, is dozens of seconds.
 As the transaction log grows over time, the savings will only get bigger!
 
-Try it out: try running `time make clean graphs` and then try running `time
+**Try it out:** try running `time make clean graphs` and then try running `time
 make -j 4 clean graphs`. Which is faster? Almost assuredly the latter will be
 faster, potentially up to twice as fast!
 

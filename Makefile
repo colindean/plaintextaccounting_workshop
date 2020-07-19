@@ -26,7 +26,7 @@ open: $(PDF_OUTPUT)
 %.tex: %.md
 	pandoc --from=markdown+autolink_bare_uris --to=latex $< -o $@
 
-WATCHABLES=Makefile $(MD_FILES) $(CONFIG) $(LEDGER_FILES) $(LICENSE_TEX:%.tex=%.md)
+WATCHABLES=Makefile $(MD_FILES) $(CONFIG) $(LEDGER_FILES) $(LICENSE_TEX:%.tex=%.md) refs.bibtex
 
 .PHONY: watch
 watch:
