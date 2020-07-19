@@ -71,7 +71,8 @@ help: ## Prints help for targets with comments
 edit: $(LEDGER_FILE) ## opens the transaction log for the year in your text editor
 	$(EDITOR) $(LEDGER_FILE)
 
-## end help tasks
+### end help tasks
+
 ```
 
 Next, you'll add some basic tasks that generate some reports for display in the
@@ -87,42 +88,45 @@ Listing: Basic business tasks for viewing common reports {#lst:makefile_terminal
 ### Terminal Viewing Tasks
 
 bal: $(LEDGER_FILE) ## show all balances
-	$(LEDGER_CMD) balance
+	$(LEDGER) balance
 
 networth: $(LEDGER_FILE) ## show short net worth report
-	$(LEDGER_CMD) --depth=2 balance ^Assets ^Liabilities
+	$(LEDGER) --depth=2 balance ^Assets ^Liabilities
 
 networth-all: $(LEDGER_FILE) ## show complete net worth report
-	$(LEDGER_CMD) balance ^Assets ^Liabilities
+	$(LEDGER) balance ^Assets ^Liabilities
 
 cashflow: $(LEDGER_FILE) ## show cashflow report
-	$(LEDGER_CMD) balance  ^Income ^Expenses
+	$(LEDGER) balance  ^Income ^Expenses
 
 expenses: $(LEDGER_FILE) ## show non-paycheck expenses (no taxes or health insurance)
-	$(LEDGER_CMD) balance ^Expenses and not ^Expenses:Taxes and not ^Expenses:Insurance
+	$(LEDGER) balance ^Expenses and not ^Expenses:Taxes and not ^Expenses:Insurance
 
 checklist: $(LEDGER_FILE) ## show a list used to check accounts
-	$(LEDGER_CMD) accounts ^Assets:Cash ^Liabilities
+	$(LEDGER) accounts ^Assets:Cash ^Liabilities
 
 raw: $(LEDGER_FILE) ## run a query with make raw Q="bal" or drops into console mode
-	$(LEDGER_CMD) $(Q)
+	$(LEDGER) $(Q)
 
 cash: $(LEDGER_FILE) ## show only cash assets
-	$(LEDGER_CMD) balance ^Assets:Cash
+	$(LEDGER) balance ^Assets:Cash
 
 investments: $(LEDGER_FILE) ## show only investments
-	$(LEDGER_CMD) balance ^Assets:Investments
+	$(LEDGER) balance ^Assets:Investments
 
 reimbursements: $(LEDGER_FILE) ## show only reimbursements
-	$(LEDGER_CMD) balance ^Assets:Reimbursements
+	$(LEDGER) balance ^Assets:Reimbursements
 
 
-## end terminal viewing tasks
+### end terminal viewing tasks
+
 ```
 
 Now that you've got a lot of tasks in your `Makefile`, run `make help` to see
 the help text associated with each tasks.
-The doc comment which has two octothorpes [^octothorpe] becomes the help text.
+It will look like @lst:makefile_output_help.
+Notice that the doc comment, which has two octothorpes [^octothorpe] on the same line
+as the task declaration, becomes the help text.
 
 Listing: The output of `make help` so far {#lst:makefile_output_help}
 
@@ -177,11 +181,13 @@ card instead of a company credit card [^churning].
   into in order to be able to spend some vacation time somewhere you want to
   go.
 
-Finally, your `Makefile` should look like @lst:makefile_final.
+Finally, your `Makefile` should look like @lst:makefile_after_script.
+Note that the top-level comments were removed in order to fit the entirety of
+the listing on one page. You can leave them in!
 
-Listing: The finalized basic `Makefile` for a `ledger` project {#lst:makefile_final}
+Listing: The finalized basic `Makefile` for a `ledger` project {#lst:makefile_after_script}
 
-```{.makefile pipe="cat Makefile.*.txt | tee Makefile.basic" .numberLines}
+```{.makefile pipe="cat Makefile.*.txt | grep -v '^# ' | tee Makefile.basic" .numberLines}
 ```
 
 #### Experimentation
@@ -192,6 +198,142 @@ Try each of the tasks to get a feel for the output of each.
 If you need to, add some transactions in order to generate data.
 
 ### Report File Generation
+
+Using the terminal to view reports might sit fine with you, but eventually,
+inevitably, you will want to produce more than a text experience for yourself.
+You may want to share your findings with others who prefer explanations,
+graphs, and more.
+In this section, you'll learn how to use ledger to produce files that you can
+use to build nice-looking reports.
+
+#### Creating Graphs with GNUplot
+
+In order to create some graphs from your records, we need some scripts to help
+manipulate the data. Write the contents of @lst:last_entry and @lst:plotsh to
+the file specified in the listing caption. Read them as you do it so you can
+understand what they are doing.
+
+<!-- not rendered -->
+```{pipe="sh"}
+mkdir scripts
+```
+Listing: `scripts/last-entry.sh`, which makes `ledger -j` output easier to graph {#lst:last_entry}
+
+```{.bash pipe="tee scripts/last-entry.sh" .numberLines}
+#!/bin/sh
+# set is a great way to write safer shell scripts
+# -e = exit when a command fails; default is continue!
+# -o pipefail = use the exit status of the last executed
+#                command in a pipe chain
+# -u = use of unset variables is an error
+set -euo pipefail
+# tac reads a file line by line from the end to beginning
+tac | \
+  # reverse the order of the data in the lines
+  awk '{print $2 " " $1}' | \
+  # remove duplicates
+  uniq -f 1 | \
+  # reverse back to normal
+  awk '{print $2 " " $1}' | \
+  tac
+
+```
+
+Listing: `scripts/plot.sh`, which runs `gnuplot` on the data provided {#lst:plotsh}
+
+```{.bash pipe="tee scripts/plot.sh" .numberLines}
+#!/usr/bin/env bash
+set -euo pipefail
+
+filename="${1}"
+
+case "${2}" in
+  checking ) title="Checking balances" ;;
+  networth ) title="Net worth" ;;
+  * ) title="${2}"
+esac
+
+# gnuplot provides a DSL for graphing
+# here, we're saying to output a PNG image of time-series data
+# in a given format with a title specified and use columns 1 and 2
+# for the data points in X and Y series on the plot
+(cat <<EOF) | gnuplot
+  set terminal png
+  set xdata time
+  set decimal locale
+  set format y "\$%'g"
+  set timefmt "%Y-%m-%d"
+  set xtics rotate
+  plot "${filename}" using 1:2 with lines title "${title}"
+EOF
+
+```
+
+With those two files written, you can add the tasks in @lst:makefile_graphs to your `Makefile`.
+
+Listing: Graph-making tasks for your `Makefile` {#lst:makefile_graphs}
+
+```{.makefile pipe="tee Makefile.05.graphs.txt" .numberLines}
+# A convenient place to store our built reports, like a build directory
+REPORTS_DIR = reports
+
+graphs: $(REPORTS_DIR) $(REPORTS_DIR)/checking.png $(REPORTS_DIR)/networth.png ## produces graphs
+
+$(REPORTS_DIR)/%.png: $(REPORTS_DIR)/%.balances
+	sh scripts/plot.sh $< $(*F) > $@
+
+LAST_ENTRY_SCRIPT = scripts/last-entry.sh
+
+$(REPORTS_DIR)/checking.balances: $(LEDGER_FILE)
+	$(LEDGER) register --daily --total-data ^Assets:Cash:Bank:Checking | \
+		sh $(LAST_ENTRY_SCRIPT) > $@
+
+$(REPORTS_DIR)/networth.balances: $(LEDGER_FILE)
+	$(LEDGER) register --daily --total-data ^Assets ^Liabilities | \
+		sh $(LAST_ENTRY_SCRIPT) > $@
+
+$(REPORTS_DIR):
+	mkdir -p reports
+```
+
+There's a lot going on in @lst:makefile_graphs, so let's break it down.
+
+Lines 6-7 are producing PNG images from `.balances` files using
+`scripts/plot.sh`. The `$(*F)` is a special variable that captures what the
+text represented by `%` is for the particular invocation.
+
+Lines 11-17 are producing the `.balances` files, which are space-separated
+pairs of date and amount produced by the `ledger` command on lines 12 and 16.
+This `ledger` command is producing a daily register report, but outputting
+formatted with the date and the _total_ column – the rightmost column – to
+provide a running total over time. `ledger` will output multiples of the same
+day when there are entries on the same day, so you must manually deduplicate
+entries: only the last entry of the period is the correct one.
+If you wanted to see the amount added each day instead of a running total,
+you would use `--amount-data` instead.
+This might be useful to identify spikes in particular daily expenses instead of
+a running total of how much you've spent on that expense.
+
+Listing: The output of `make graphs` against `ex.ledger` renamed `2020.ledger` or using `LEDGER_FILE=ex.ledger` {#lst:makefile_graphs_run}
+
+```{.bash pipe="bash" .numberLines}
+cat Makefile.*.txt > Makefile.graphs
+make -j 2 -f Makefile.graphs graphs LEDGER_FILE=ex.ledger
+mkdir -p root/build/reports
+cp reports/checking.png root/build/reports/checking.png
+cp reports/networth.png root/build/reports/networth.png
+```
+
+The graphs will look something like those in @fig:checking_balances_graph and
+@fig:networth_balances_graph.
+
+![Checking balances in `ex.ledger`](build/reports/checking.png){#fig:checking_balances_graph height=2in}
+
+![Net worth balances in `ex.ledger`](build/reports/networth.png){#fig:networth_balances_graph height=2in}
+
+#### Experimentation
+
+Using the tasks in @lst:makefile_graphs as a guide, create some of your own graphs.
 
 #### Parallelism {#sec:parallelism}
 
@@ -211,4 +353,9 @@ serially, and `make -j 8 statement`, which runs reports in parallel before
 building the final document, is dozens of seconds.
 As the transaction log grows over time, the savings will only get bigger!
 
+Try it out: try running `time make clean graphs` and then try running `time
+make -j 4 clean graphs`. Which is faster? Almost assuredly the latter will be
+faster, potentially up to twice as fast!
 
+That paralellism is why programmers love having multiple CPU cores available.
+The more cores, the more tasks can be run simultaneously.

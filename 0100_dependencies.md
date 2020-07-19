@@ -25,6 +25,12 @@ Software           Utility                              Website
 
 `ledger2beancount` Converts Ledger-format transaction   https://github.com/beancount/ledger2beancount
                    records to Beancount format
+
+`gnuplot`          Renders graphs from data files       http://www.gnuplot.info/
+
+GNU `make`         Task- and file-based build system    https://www.gnu.org/software/make/
+                   standard across multiple ecosystems
+
 -----------------------------------------------------------------------------------------------------
 
 ## Install with a package manager
@@ -53,20 +59,21 @@ If you've not already installed Homebrew, follow the instructions at <https://br
 
 @Lst:brewfile contains `Brewfile` for use with Homebrew. Write its contents to a file called `Brewfile` and then run `brew bundle` to install the software.
 
-```{#lst:brewfile .ruby caption="Brewfile"}
+```{#lst:brewfile .ruby caption="Brewfile" pipe="tee Brewfile"}
 # Brewfile for macOS and Linux
 brew 'ledger'
 brew 'entr'
 brew 'xsv'
 brew 'python'
 brew 'make'
+brew 'gnuplot'
 ```
 
 ### Python's `pip`
 
 After you've installed those packages, you'll need to install some Python packages with [`pip`](https://pypi.org/project/pip/), the package installer for the Python Package Index. Write the contents of @lst:requirements-txt to a file named `requirements.txt` and follow the instruction in the comments to execute the installation process.
 
-```{#lst:requirements-txt caption="requirements.txt"}
+```{#lst:requirements-txt caption="requirements.txt" pipe="tee requirements.txt"}
 # put this into requirements.txt then run
 #     pip install -r requirements.txt -U
 #
@@ -103,5 +110,7 @@ echo "# python"
 python --version
 echo "# make"
 make -v
+echo "# gnuplot"
+gnuplot --version
 ```
 

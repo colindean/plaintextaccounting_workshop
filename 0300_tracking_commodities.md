@@ -35,7 +35,7 @@ commodity USD
 
 With your mortgage payments tracked like this, your house is in your Assets
 and your mortgage is in Liabilities. Therefore, you're tracking them in your net worth,
-as recommended in @sec:net_worth_intro.
+as recommended in @sec:net_worth.
 You can easily check your mortgage interest paid to verify your records against
 the IRS Form 1098-INT that your bank issues yearly to support mortgage interest
 deductions in the United States.
