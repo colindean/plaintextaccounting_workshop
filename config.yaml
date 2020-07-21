@@ -30,6 +30,7 @@ metadata:
     by sharing your knowledge as I have shared mine.
   # filter metadata
   # crossrefYaml: pandoc-crossref.yaml
+
 include-before-body: ['LICENSE.tex']
 
 variables:

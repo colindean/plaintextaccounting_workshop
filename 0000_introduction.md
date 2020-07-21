@@ -65,6 +65,20 @@ Time breakdown:
 
 If any time remains, you can work through an optional module exploring time tracking using `ledger`.
 
+## Things You'll Have When You Are Done
+
+1. A basic understanding of accounting principals
+1. The knowledge to read and write `ledger` transaction records to represent
+   daily transactions, payments, stocks, and inventory
+1. The knowledge to query transaction logs with `ledger`
+1. A simple script to run `ledger`
+1. A better way than that script to run `ledger`: `make`
+1. A `make` configuration that you could use to be immediately productive
+   tracking your own finances if you build transaction records from your
+   financial statements
+1. A way to convert your bank statement exports to `ledger` transaction records
+1. A way to track your time using `ledger`
+
 ## About the author
 
 Colin Dean has been using Plain Text Accounting tools since the early 2010s for his work time tracking, his personal finances, and managing the finances of the for-profit and non-profit organizations he administers. He runs the [/r/plaintextaccounting subreddit](https://reddit.com/r/plaintextaccounting) and has contributed to the Plain Text Accounting ecosystem through educational presentations, bug reporting, and software development.

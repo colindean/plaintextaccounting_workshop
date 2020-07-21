@@ -16,6 +16,22 @@ If it follows an imperative verb such as "run" or "execute," then it is
 a command that you should execute.
 For example, run `date` to see the current date in your terminal.
 
+Some call-out sections will look like this or begin with certain words:
+
+::: tryit
+
+**TRY IT:** This paragraph contains something that you could do for
+experimentation. It'll probably be open-ended.
+
+:::
+
+::: protip
+
+**PROTIP:** This paragraph contains something that this author has learned
+through experience that will make your life easier knowing ahead of time.
+
+:::
+
 **Listings** contain code snippets or the expected output of a command.
 This document is automatically laid out, so some listings will be follow the
 relevant text significantly, sometimes several pages later.
@@ -23,6 +39,13 @@ This may be confusing at first, but using the internal links will expedite
 navigation.
 It may be useful to have two side-by-side copies of the document open: one for
 reading the prose and one for copying text from the referenced listing.
+
+Most listings can be copied out of the PDF by highlighting them, copying the
+text to your clipboard, and pasting into a text editor. Some document readers
+may capture the line numbers in the process. You can either highlight
+line-by-line or refer to the companion files for this workshop to find the
+text. Apple Preview seems to work as expected while Google Drive PDF Viewer
+copies the line numbers all the time – don't use it!
 
 Listing: An example listing {#lst:conventions}
 

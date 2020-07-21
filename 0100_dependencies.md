@@ -69,17 +69,26 @@ brew 'make'
 brew 'gnuplot'
 ```
 
-### Python's `pip`
+### Python dependencies with `pip`
 
 After you've installed those packages, you'll need to install some Python packages with [`pip`](https://pypi.org/project/pip/), the package installer for the Python Package Index. Write the contents of @lst:requirements-txt to a file named `requirements.txt` and follow the instruction in the comments to execute the installation process.
 
-```{#lst:requirements-txt caption="requirements.txt" pipe="tee requirements.txt"}
+Note that you may already have a Python 2.x environment installed and set to
+default even if you install Python 3.x in an earlier step. Be sure that when
+you run `pip --version`, you see `python 3.x` like what's in @lst:versions for
+`pip`.
+If you don't, use `pip3` to install the above packages.
+
+Listing: `requirements.txt` {#lst:requirements-txt}
+
+```{pipe="tee requirements.txt"}
 # put this into requirements.txt then run
 #     pip install -r requirements.txt -U
 #
 ledger-autosync
 fava
 ```
+
 
 ### Other dependencies to be manually installed
 
@@ -108,8 +117,10 @@ echo "# xsv"
 xsv --version
 echo "# python"
 python --version
+echo "# pip"
+pip --version
 echo "# make"
-make -v
+make -v | head -n 1
 echo "# gnuplot"
 gnuplot --version
 ```

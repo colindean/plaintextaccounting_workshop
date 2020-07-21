@@ -278,11 +278,10 @@ that show
 
 [^equity]: Equity is the value of the property minus the mortgage, divided by the value of the property.]
 
-You can track the value of your home in a prices database and account for
+You can track the value of your home in a prices database, too, and account for
 estimated fluctuations in its value or track appraisal prices as a base when
 refinancing or getting a home equity loan.
 
 
 
 
-## Expressing Purchases
