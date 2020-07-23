@@ -40,7 +40,7 @@ navigation.
 It may be useful to have two side-by-side copies of the document open: one for
 reading the prose and one for copying text from the referenced listing.
 
-There are two ways to use the examples provided in listings:
+There are three ways to use the examples provided in listings:
 
 1. You should have received along with this PDF a compressed archive containing
    some supplementary files.
@@ -51,7 +51,7 @@ There are two ways to use the examples provided in listings:
    parentheses at the end of the caption.
    You can use the content of this file as if you'd copied the file by hand out
    of the workshop text!
-1. Most listings can be copied out of the PDF by highlighting them, copying the
+1. Some listings can be copied out of the PDF by highlighting them, copying the
    text to your clipboard, and pasting into a text editor. Some document readers
    may capture the line numbers in the process. You can either highlight
    line-by-line or refer to the companion files for this workshop to find the

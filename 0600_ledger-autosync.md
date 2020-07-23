@@ -1,8 +1,55 @@
-# Using `ledger-autosync` to convert bank records
+# Importing Data from Your Financial Institutions
+
+## Using `ledger-autosync` to convert bank records
 
 `ledger-autosync` is a fantastic tool that drastically expedites data entry by almost entirely automating it.
 
-## Updating a transaction record with new data
+### Cleaning data {#sec:sync_clean}
+
+If you're lucky, your bank will provide an export in QFX or OFX format.
+`ledger-autosync` handles this excellently and needs little manual preparation.
+However, not all do – only four of this author's seven financial institutions
+do – so you will inevitably need to deal with CSV.
+
+First, you need to understand CSV, character- or comma-separated value format. If you've never encountered it, you're probably early in your journey in computer science and consuming data.
+CSV uses a character, generally a comma (`,`) to separate fields in a record of data, and another character, generally a newline, to separate the records.
+Fields are optionally contained within paired quotation marks (`"`) in order to
+allow commas and newlines to be "escaped" and exist within the field.
+Other common field separators are tabs, pipes (`|`), and the actual unit separator character (ASCII 31), while the record separator is almost always a newline but is sometimes the record separator character (ASCII 30). There are a variety of [delimiters](https://en.wikipedia.org/wiki/Delimiter) in CSV, but it's important to think in commas, quotation marks, and newlines most of the time.
+
+Despite being often created by CSV libraries, sometimes CSV isn't cleanly parseable. Again, if you don't already know this, you will learn in the process of maintaining your finances that CSV is the worst format ever and that you should avoid it at all costs, both as a consumer and a producer [^bidhigh].
+
+[^bidhigh]: If someone ever asks you how much it will cost to ship CSV as a part of a product, bid high.
+
+For example, Simple, one of my banks, emits CSV that Python's CSV library cannot reliably automatically determine its delimiter. So I use a convenient tool called `xsv` to sort it (because it comes in reverse order) and then add quotation marks explicitly in `clean_simple.sh`, shown in @lst:cleancsv.
+
+Listing: `clean_simple.sh` {#lst:cleancsv}
+
+```{.bash pipe="tee clean_simple.sh"}
+#!/usr/bin/env bash
+INPUT="$1"
+xsv sort --select Date "${INPUT}" | \
+  xsv fmt --quote-always > \
+    "$(basename -s .csv "${INPUT}")-sorted.csv"
+
+```
+
+```{pipe="sh"}
+cp root/simple.csv simple.csv
+```
+
+::: tryit
+
+**TRY IT:** In the supplementary artifacts provided in @sec:artifacts, there is
+a file `simple.csv`.
+Run @lst:cleancsv on it with `bash clean_simple.sh
+simple.csv` to fix the data so that `ledger-autosync` can read it.
+The output will be written to `simple-sorted.csv`.
+
+:::
+
+
+### Updating a transaction record with new data {#sec:autosync_updates}
 
 `ledger-autosync` uses a _transaction ID_ to uniquely identify transactions.
 When importing from QFX files, this transaction ID is provided by the exporting bank and _should_ always be trustworthy.
@@ -20,19 +67,16 @@ smushed_row = reduce(lambda a,b: a + b, row).encode('utf-8')
 csv_id = hashlib.sha256(smushed_row).hexdigest()
 ```
 
-Run once on your exported CSV to visually check the output using the command in @lst:export_show.
-Note that `bank_export_20200615.csv` is _not_ included in the supplementary files
-for this workshop (@sec:artifacts), but is a theoretical file containing CSV
-data directly from your bank.
+Run `ledger-autosync` once on your clean, exported CSV from @sec:sync_clean to visually check the output using the command in @lst:export_show.
 
-Listing: `ledger-autosync` running on `bank_export_20200615.csv` {#lst:export_show}
+Listing: `ledger-autosync` running on `simple-sorted.csv` {#lst:export_show}
 
 ```bash
 ledger-autosync \
-    -a "Assets:Cash:Banks:Dollar:Checking" \
+    -a "Assets:Cash:Banks:Simple:Checking" \
     -l 2020.ledger \
     --unknown-account "Equity:Unknown" \
-    bank_export_20200615.csv
+    simple-sorted.csv
 ```
 
 Then, run it again, but this time _append_ to your existing transaction record using output redirection `>>`, as shown in @lst:export_append.
@@ -41,42 +85,55 @@ Listing: Appending the output of `ledger-autosync` to a file {#lst:export_append
 
 ```bash
 ledger-autosync \
-    -a "Assets:Cash:Banks:Dollar:Checking" \
+    -a "Assets:Cash:Banks:Simple:Checking" \
     -l 2020.ledger \
     --unknown-account "Equity:Unknown" \
-    bank_export_20200615.csv >> 2020.ledger
+    simple-sorted.csv >> 2020.ledger
 ```
 
-## Cleaning data
+If you run @lst:export_append again, you'll notice that nothing else new was added! `ledger-autosync` successfully used the CSVID it generated to keep from adding transactions it already had converted.
 
-Sometimes, CSV isn't cleanly parseable. If you don't already know this, you will learn in the process of maintaining your finances that CSV is the worst format ever and that you should avoid it at all costs, both as a consumer and a producer.
+## Converting with `ledger`
 
-For example, Simple, one of my banks, emits CSV that Python's CSV library cannot reliably automatically determine its delimiter. So I use a convenient tool called `xsv` to sort it (because it comes in reverse order) and then add quotation marks explicitly in `clean_simple.sh`, shown in @lst:cleancsv.
+Importing with `ledger` is possible through its `convert` command.
+However, it takes a lot of massaging of data to use.
+It lends itself to scripting, but those scripts are not as easy to share as
+`ledger-autosync`'s plugins. This author has contributed some of the converters
+available in `ledger-autosync`.
 
-Listing: `clean_simple.sh` {#lst:cleancsv}
+If you're interested in learning how to convert using only `ledger`, check out
+the [`convert` command section](https://www.ledger-cli.org/3.0/doc/ledger3.html#The-convert-command) in the `ledger` docs.
+This section is thorough and well-explained.
 
-```{.bash pipe="tee clean_simple.sh"}
-#!/usr/bin/env bash
-INPUT="$1"
-xsv sort --select Date "${INPUT}" | \
-  xsv fmt --quote-always > \
-    "$(basename -s .csv "${INPUT}")-sorted.csv"
+## Experimentation
 
-```
+::: tryit
 
-## The tedium: categorizing transactions using accounts in your account tree
+**TRY IT:**
+Retrieve exports from your financial institution perhaps from a bank like
+Simple.
+Try different ways of converting them automatically or try entering
+a few transactions by hand.
+
+:::
+
+You may find that you need to implement a converter plugin for
+`ledger-autosync`. See the [Plugin Support](https://github.com/egh/ledger-autosync#plugin-support) documentation for how to write in Python a new `CsvConverter` subclass that the program can load and use.
+Use the [built-in converters](https://github.com/egh/ledger-autosync/blob/cc6d9f61420c69d08d5b7d6d529f28c5da20cf47/ledgerautosync/converter.py#L597-L929) as inspiration or ask the author of this workshop for advice – he's implemented many converters!
+
+## The tedium: categorizing transactions using accounts in your account tree {#sec:categorizing}
 
 Now that you've got some data, you're onto the tedious task of categorizing transactions by replacing the `Equity:Unknown` account with something meaningful.
 
 Don't worry too much about formatting. We'll use `ledger` itself to reformat and sort the transactions you're modifying.
 
-It might be helpful to have a little program showing you what transactions remain to be categorized. [`entr`](http://eradman.com/entrproject/) is a great little tool for watching files for changes and running a command when they change:
+It might be helpful to have a little program showing you what transactions remain to be categorized. [`entr`](http://eradman.com/entrproject/) is a great little tool for watching files for changes and running a command when they change. @lst:entr shows a command that runs a `ledger` register report in wide mode on `2020.ledger` showing only the `Equity:Unknown` account postings whenever `2020.ledger` changes.
+
+Listing: Automatically run ledger whenever `2020.ledger` changes {#lst:entr}
 
 ```bash
 echo 2020.ledger | entr -acpr ledger -w -f /_ reg Equity:Unknown
 ```
-
-Once you're done with this, commit!
 
 ## Deduplicating inter-account transfers
 

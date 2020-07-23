@@ -7,7 +7,7 @@ There are two types of basic reports in `ledger`:
 
 Write the contents of @lst:basics_basic to a file `1.ledger`.
 
-## Balance reports
+## Balance reports {#sec:reports_balance}
 
 Balance reports display balances in a a convenient account tree format.
 This format enables you to see what amounts are associated with what accounts

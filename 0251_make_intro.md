@@ -1,4 +1,4 @@
-## A Brief Introduction to `make`
+## A Brief Introduction to `make` {#sec:make_intro}
 
 `make` is a file-oriented build automation tool.
 A `Makefile` describes the steps necessary to create a file in the form of
@@ -22,7 +22,7 @@ If you want to try this out and have a C compiler already installed –
 try `gcc -v` – then write the contents of @lst:helloworld_c to `hello.c` and
 run `make` after writing the contents of @lst:example_makefile to `Makefile`.
 
-Listing: A basic `Makefile` used to compile a program written in C {#lst:example_makefile}
+Listing: A basic `Makefile` used to compile a program written in C (`Makefile.helloworld`) {#lst:example_makefile}
 
 ```{.makefile pipe="tee Makefile.helloworld"}
 # get all of the C files in the directory

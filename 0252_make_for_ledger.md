@@ -23,7 +23,7 @@ For example,
 variable during startup. You'll use this mechanism to override some default
 values that you'll specify at the top of the `Makefile`.
 
-Listing: Some base variables for `Makefile` {#lst:makefile_variables}
+Listing: Some base variables for `Makefile` (`Makefile.01.vars.txt`) {#lst:makefile_variables}
 
 ```{.makefile pipe="tee Makefile.01.vars.txt" .numberLines}
 # The year for reports tied to a year, defaults to the current year.
@@ -58,7 +58,7 @@ file and display. While you're at it, create another task that will help you
 open the year's file without having to remember – or think about – what year it is.
 The 2020s have been a a long decade for all of us!
 
-Listing: Helpful tasks for your `Makefile` {#lst:makefile_help}
+Listing: Helpful tasks for your `Makefile` (`Makefile.02.help.txt`) {#lst:makefile_help}
 
 ```{.makefile pipe="tee Makefile.02.help.txt" .numberLines}
 ### Help Tasks
@@ -82,7 +82,7 @@ Some plain text accounting practitioners never really go past this or skip
 directly to a graphical tool like you will learn about in @sec:fava.
 Add the contents of @lst:makefile_terminal to your `Makefile`.
 
-Listing: Basic business tasks for viewing common reports {#lst:makefile_terminal}
+Listing: Basic business tasks for viewing common reports (`Makefile.03.terminal.txt`) {#lst:makefile_terminal}
 
 ```{.makefile pipe="tee Makefile.03.terminal.txt" .numberLines}
 ### Terminal Viewing Tasks
@@ -123,12 +123,23 @@ reimbursements: $(LEDGER_FILE) ## show only reimbursements
 ```
 
 Now that you've got a lot of tasks in your `Makefile`, run `make help` to see
-the help text associated with each tasks.
+the help text associated with each tasks or
+run `make -f Makefile.help` if you're using the supplementary files from @sec:artifacts.
 It will look like @lst:makefile_output_help.
 Notice that the doc comment, which has two octothorpes [^octothorpe] on the same line
 as the task declaration, becomes the help text.
 
-Listing: The output of `make help` so far {#lst:makefile_output_help}
+::: protip
+
+**PROTIP:** Like `ledger`, `make` supports using `-f` or `--file` to specify a file to use
+instead of its default `Makefile`. It is convention to use `Makefile` and only
+use `Makefile.something` when `something` is some kind of rarely used alternate
+mode or it's automatically included in `Makefile` as a collection of subtasks.
+This workshop provides a series of Makefiles at various stages of completion.
+
+:::
+
+Listing: The output of `make help` so far (`Makefile.help`) {#lst:makefile_output_help}
 
 ```{pipe="bash" .numberLines}
 cat Makefile.*.txt > Makefile.help
@@ -185,7 +196,7 @@ Finally, your `Makefile` should look like @lst:makefile_after_script.
 Note that the top-level comments were removed in order to fit the entirety of
 the listing on one page. You can leave them in!
 
-Listing: The finalized basic `Makefile` for a `ledger` project {#lst:makefile_after_script}
+Listing: The finalized basic `Makefile` for a `ledger` project (`Makefile.basic`) {#lst:makefile_after_script}
 
 ```{.makefile pipe="cat Makefile.*.txt | grep -v '^# ' | tee Makefile.basic" .numberLines}
 ```
@@ -206,13 +217,12 @@ graphs, and more.
 In this section, you'll learn how to use ledger to produce files that you can
 use to build nice-looking reports.
 
-#### Creating Graphs with GNUplot
+#### Creating Graphs with GNUplot {#sec:gnuplot}
 
 In order to create some graphs from your records, we need some scripts to help
 manipulate the data. Write the contents of @lst:last_entry and @lst:plotsh to
 the file specified in the listing caption. Read them as you do it so you can
 understand what they are doing.
-
 <!-- not rendered -->
 ```{pipe="sh"}
 mkdir scripts
@@ -271,7 +281,7 @@ EOF
 
 With those two files written, you can add the tasks in @lst:makefile_graphs to your `Makefile`.
 
-Listing: Graph-making tasks for your `Makefile` {#lst:makefile_graphs}
+Listing: Graph-making tasks for your `Makefile` (`Makefile.05.graphs.txt`) {#lst:makefile_graphs}
 
 ```{.makefile pipe="tee Makefile.05.graphs.txt" .numberLines}
 # A convenient place to store our built reports, like a build directory
@@ -327,9 +337,9 @@ cp reports/networth.png root/build/reports/networth.png
 The graphs will look something like those in @fig:checking_balances_graph and
 @fig:networth_balances_graph.
 
-![Checking balances in `ex.ledger`](build/reports/checking.png){#fig:checking_balances_graph height=2in}
+![Checking balances in `ex.ledger` (`reports/checking.png`)](build/reports/checking.png){#fig:checking_balances_graph height=2in}
 
-![Net worth balances in `ex.ledger`](build/reports/networth.png){#fig:networth_balances_graph height=2in}
+![Net worth balances in `ex.ledger` (`reports/networth.png`)](build/reports/networth.png){#fig:networth_balances_graph height=2in}
 
 #### Experimentation
 
@@ -353,9 +363,14 @@ serially, and `make -j 8 statement`, which runs reports in parallel before
 building the final document, is dozens of seconds.
 As the transaction log grows over time, the savings will only get bigger!
 
-**Try it out:** try running `time make clean graphs` and then try running `time
+::: tryit
+
+**TRY IT:** try running `time make clean graphs` and then try running `time
 make -j 4 clean graphs`. Which is faster? Almost assuredly the latter will be
 faster, potentially up to twice as fast!
 
 That paralellism is why programmers love having multiple CPU cores available.
 The more cores, the more tasks can be run simultaneously.
+
+:::
+

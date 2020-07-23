@@ -1,0 +1,28 @@
+Date,Recorded at,Scheduled for,Amount,Activity,Pending,Raw description,Description,Category folder,Category,Street address,City,State,Zip,Latitude,Longitude,Memo
+2020/07/01,,,0.01,Interest credit,FALSE,IOD INTEREST PAID,Interest Credit,Income,Interest,,,,,,,
+2020/06/30,,,-3600.00,Direct debit,FALSE,DIRECT DEBIT,Mortgage,Expenses,Mortgage,,,,,,,Mortgage payment
+2020/06/18,,,-16.67,Debit,FALSE,DEBIT PURCHASE,Black Forge Coffee,Expenses,Coffee,,,,,,,Coffee at Black Forge
+2020/06/08,,,200.00,Check deposit,FALSE,MOBILE DEPOSIT,Check Deposit,Income,Other Income,,,,,,,Elections Payment
+2020/06/04,,,-4.87,Debit,FALSE,DEBIT PURCHASE,Black Forge Coffee,Expenses,Coffee,,,,,,,Coffee at Black Forge
+2020/06/02,,,5000.00,Check deposit,FALSE,DIRECT DEPOSIT,Code & Supply,Income,Salary,,,,,,,Payday
+2020/05/30,,,0.01,Interest credit,FALSE,IOD INTEREST PAID,Interest Credit,Income,Interest,,,,,,,
+2020/05/24,,,200.00,C2c,FALSE,Instant Transfer from Partner,Partner,Financial,Money Transfers,,,,,,,Oops
+2020/05/24,,,-16.67,Debit,FALSE,DEBIT PURCHASE,Black Forge Coffee,Expenses,Coffee,,,,,,,Coffee at Black Forge
+2020/05/23,,,-250.00,C2c,FALSE,Instant Transfer to Partner,Partner,Financial,Money Transfers,,,,,,,Dinner at Dijlah
+2020/05/07,,,100.00,Check deposit,FALSE,MOBILE DEPOSIT,Check Deposit,Income,Other Income,,,,,,,Birthday card
+2020/05/02,,,5000.00,Check deposit,FALSE,DIRECT DEPOSIT,Code & Supply,Income,Salary,,,,,,,Payday
+2020/05/01,,,0.01,Interest credit,FALSE,IOD INTEREST PAID,Interest Credit,Income,Interest,,,,,,,
+2020/04/18,,,-16.67,Debit,FALSE,DEBIT PURCHASE,Black Forge Coffee,Expenses,Coffee,,,,,,,Coffee at Black Forge
+2020/04/14,,,-5.67,Debit,FALSE,DEBIT PURCHASE,Black Forge Coffee,Expenses,Coffee,,,,,,,Coffee at Black Forge
+2020/04/02,,,5000.00,Check deposit,FALSE,DIRECT DEPOSIT,Code & Supply,Income,Salary,,,,,,,Payday
+2020/04/01,,,0.01,Interest credit,FALSE,IOD INTEREST PAID,Interest Credit,Income,Interest,,,,,,,
+2020/03/30,,,-3600.00,Direct debit,FALSE,DIRECT DEBIT,Mortgage,Expenses,Mortgage,,,,,,,Mortgage payment
+2020/03/28,,,-4.67,Debit,FALSE,DEBIT PURCHASE,Black Forge Coffee,Expenses,Coffee,,,,,,,Coffee at Black Forge
+2020/03/02,,,5000.00,Check deposit,FALSE,DIRECT DEPOSIT,Code & Supply,Income,Salary,,,,,,,Payday
+2020/02/29,,,0.01,Interest credit,FALSE,IOD INTEREST PAID,Interest Credit,Income,Interest,,,,,,,
+2020/02/10,,,493.05,Check deposit,FALSE,MOBILE DEPOSIT,Check Deposit,Income,Other Income,,,,,,,Costco Cashback
+2020/02/08,,,-16.67,Debit,FALSE,DEBIT PURCHASE,Black Forge Coffee,Expenses,Coffee,,,,,,,Coffee at Black Forge
+2020/02/02,,,5000.00,Check deposit,FALSE,DIRECT DEPOSIT,Code & Supply,Income,Salary,,,,,,,Payday
+2020/01/18,,,175.00,Check deposit,FALSE,MOBILE DEPOSIT,Check Deposit,Income,Other Income,,,,,,,
+2020/01/09,,,-75.00,C2c,FALSE,Instant Transfer to Partner,Partner,Financial,Money Transfers,,,,,,,Truck gas
+2020/01/02,,,5000.00,Check deposit,FALSE,DIRECT DEPOSIT,Code & Supply,Income,Salary,,,,,,,Payday
