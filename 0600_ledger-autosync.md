@@ -187,10 +187,12 @@ When trying to figure out how to categorize transactions from the same vendor, t
 
 `ledger` contains a simple `print` command that writes transactions out in the most storage-efficient format possible. It can also use queries to limit what's printed or it can sort the output. Since our appended transactions may be out of order, let's use the opportunity to sort them by date, which is indicated by `d` in `ledger`'s format specifier syntax.
 
-It's a good idea to ensure that you've committed before doing this in case the sort messes up.
+It's a good idea to ensure that you've committed before doing this in case the sort messes up. @Lst:sorting shows how to safely sort.
+
+Listing: Sorting safely with ledger {#lst:sorting}
 
 ```bash
-ledger -f 2020.ledger --sort d > 2020-s.ledger
+ledger -f 2020.ledger --sort d print > 2020-s.ledger
 mv 2020-s.ledger 2020.ledger
 ledger -f 2020.ledger bal
 ```

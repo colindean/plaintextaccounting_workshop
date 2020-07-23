@@ -1,5 +1,6 @@
 *.pdf
 LICENSE.tex
+REPO.tex
 test.md
 build
 *.tar.gz

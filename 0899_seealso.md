@@ -9,7 +9,7 @@ author, generally using the handle `colindean`.
 
 * [`plaintextaccounting.org`](https://plaintextaccounting.org/)
 * [`/r/plaintextaccounting` on reddit](https://reddit.com/r/plaintextaccounting)
-* [@ledgertips on Twitter](https://twitter.com/LedgerTips)
+* [\@ledgertips on Twitter](https://twitter.com/LedgerTips)
 * [ledger-cli on Google Groups](https://groups.google.com/forum/#!forum/ledger-cli)
 
 ## Reporting and Data Entry

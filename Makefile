@@ -7,11 +7,11 @@ CONFIG=config.yaml
 MD_FILES=$(sort $(wildcard 0*.md))
 LEDGER_FILES=$(sort $(wildcard *.ledger))
 
-LICENSE_TEX=LICENSE.tex
+HEADER_TEXS=LICENSE.tex REPO.tex
 
 all: $(OUTPUTS)
 
-$(PDF_OUTPUT): $(MD_FILES) $(CONFIG) $(LICENSE_TEX)
+$(PDF_OUTPUT): $(MD_FILES) $(CONFIG) $(HEADER_TEXS)
 	pandoc \
 		--defaults $(CONFIG) \
 		$(MD_FILES) \
@@ -26,12 +26,17 @@ open: $(PDF_OUTPUT)
 %.tex: %.md
 	pandoc --from=markdown+autolink_bare_uris --to=latex $< -o $@
 
-WATCHABLES=Makefile $(MD_FILES) $(CONFIG) $(LEDGER_FILES) $(LICENSE_TEX:%.tex=%.md) refs.bibtex
+WATCHABLES=Makefile $(MD_FILES) $(CONFIG) $(LEDGER_FILES) $(HEADER_TEXS:%.tex=%.md) refs.bibtex
 
 .PHONY: watch
 watch:
-	ls $(WATCHABLES) $(LICENSE_TEX) | entr -napr make $(PDF_OUTPUT) PATCH=-wip
+	ls $(WATCHABLES) $(HEADER_TEXS) | entr -napr make $(PDF_OUTPUT) PATCH=-wip
 
 .PHONY: gitadd
 gitadd:
 	git add $(WATCHABLES)
+
+.PHONY: clean
+clean:
+	rm -rf $(HEADER_TEXS) $(OUTPUTS)
+

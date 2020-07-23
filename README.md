@@ -13,7 +13,7 @@ workshop document.
 
 And then there's the no so easily available:
 
-* [`panpipe`](https://hackage.haskell.org/package/panpipe "warning: takes forever to compile all dependencies and install") ([git](http://chriswarbo.net/git/panpipe/git/index.html))
+* [`panpipe`](https://hackage.haskell.org/package/panpipe "warning: takes forever to compile all dependencies and install") ([git](http://chriswarbo.net/git/panpipe/git/index.html)) ([my custom fork](https://github.com/colindean/panpipe))
 
 Run `make open` to compile the PDF and open it in a PDF viewer.
 

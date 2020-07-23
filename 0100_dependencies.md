@@ -39,9 +39,9 @@ It may be tempting to install each of these packages one-by-one, or in groups,
 but it's a good practice to use per-project package manifests. Those are
 provided in @sec:install_homebrew and @sec:install_pip.
 
-The next two sections provide one-liners to install their packages if you don't
-want to wait and use the other method or want to install just enough to get
-through the basics of the workshop.
+@Sec:install_basics and @sec:install_advanced provide one-liners to install
+their packages if you don't want to wait and use the other method or want to
+install just enough to get through the basics of the workshop.
 
 ## Installing Using a Package Manager
 
@@ -63,7 +63,7 @@ Table: Operating system package manager support {#tbl:os-pkgman}
 
 Not all dependencies may be available through each package manager, and dependencies with more extensive installation instructions may be detailed at the time of their use.
 
-### The Basics
+### The Basics {#sec:install_basics}
 
 In order to complete the most meaningful parts of this workshop, you will need
 to install `ledger` for @sec:reports_balance, GNU `make` for @sec:make_intro,
@@ -87,7 +87,7 @@ apt install ledger make gnuplot
 apk add ledger make gnuplot
 ```
 
-### The Advanced Dependencies
+### The Advanced Dependencies {#sec:install_advanced}
 
 In order to complete the entire workshop, you will need to additionally install
 `xsv` for @sec:sync_clean,
