@@ -43,7 +43,27 @@ The next two sections provide one-liners to install their packages if you don't
 want to wait and use the other method or want to install just enough to get
 through the basics of the workshop.
 
-## The Basics
+## Installing Using a Package Manager
+
+While you could install each of these programs in @tbl:tool-list separately, it's easiest to do that in a package manager. [Homebrew](https://brew.sh) is the package manager used in examples in this section and the remainder of the workshop. Other package managers described in @tbl:os-pkgman may contain the software necessary to complete this workshop.
+
+Table: Operating system package manager support {#tbl:os-pkgman}
+
+|Operating System|Supported for Workshop?[^os-support-notice]|Recommendation                       |
+|----------------|---------------|-----------------------------------------------------------------|
+|macOS|Yes|Homebrew|
+|Linux|Partially|Homebrew or your distro's package manager plus Cargo|
+| ChromeOS | Partially | Use [Linux (Beta) mode](https://support.google.com/chromebook/answer/9145439) to install Linux packages and then use [Homebrew](https://brew.sh)  or [Chromebrew](https://skycocker.github.io/chromebrew/) to access other packages. |
+|Windows | Partially | Install [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10) or use a Linux VM, then follow Ubuntu Linux instructions. You can [Chocolatey](https://chocolatey.org/) or [Scoop](https://scoop.sh) for some programs. |
+| Android | No | [Termux](https://termux.com/) |
+|iOS | No | Please use a desktop operating system for this workshop. |
+| Others| No | You probably know what you're doing
+
+[^os-support-notice]: Operating systems that partially-supported are supported when using Homebrew.
+
+Not all dependencies may be available through each package manager, and dependencies with more extensive installation instructions may be detailed at the time of their use.
+
+### The Basics
 
 In order to complete the most meaningful parts of this workshop, you will need
 to install `ledger` for @sec:reports_balance, GNU `make` for @sec:make_intro,
@@ -58,7 +78,8 @@ Listing: Package installer lines for the basics {#lst:install_basics}
 brew install ledger make gnuplot
 # Windows with Chocolatey
 choco install ledger make gnuplot
-# Windows with Scoop, ledger unavailable
+# Windows with Scoop
+#   - ledger unavailable, use choco for it
 scoop install make gnuplot
 # Ubuntu/Debian Linux
 apt install ledger make gnuplot
@@ -66,7 +87,7 @@ apt install ledger make gnuplot
 apk add ledger make gnuplot
 ```
 
-## The Advanced Dependencies
+### The Advanced Dependencies
 
 In order to complete the entire workshop, you will need to additionally install
 `xsv` for @sec:sync_clean,
@@ -74,26 +95,31 @@ In order to complete the entire workshop, you will need to additionally install
 in @sec:autosync_updates,
 and
 `entr` for @sec:categorizing.
+@lst:install_advanced provides a quick one-liner
+to install these if you don't want to use a Homebrew manifest in
+@sec:install_homebrew.
 
-## Installing Everything At Once with a Package Manager
+Listing: Package installer lines for the tools used later in the workshop {#lst:install_advanced}
 
-While you could install each of these programs in @tbl:tool-list separately, it's easiest to do that in a package manager. [Homebrew](https://brew.sh) is the package manager used in examples in this section and the remainder of the workshop. Other package managers described in @tbl:os-pkgman may contain the software necessary to complete this workshop.
-
-Table: Operating system package manager support {#tbl:os-pkgman}
-
-|Operating System|Supported for Workshop?[^os-support-notice]|Recommendation                       |
-|----------------|---------------|-----------------------------------------------------------------|
-|macOS|Yes|Homebrew|
-|Linux|Partially|Homebrew or your distro's package manager|
-| ChromeOS | Partially | Use [Linux (Beta) mode](https://support.google.com/chromebook/answer/9145439) to install Linux packages and then use [Homebrew](https://brew.sh)  or [Chromebrew](https://skycocker.github.io/chromebrew/) to access other packages. |
-|Windows | Partially | Install [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10) or use a Linux VM, then follow Linux instructions |
-| Android | No | [Termux](https://termux.com/) |
-|iOS | No | Please use a desktop operating system for this workshop. |
-| Others| No | You probably know what you're doing
-
-[^os-support-notice]: Operating systems that partially-supported are supported when using Homebrew.
-
-Not all dependencies may be available through each package manager, and dependencies with more extensive installation instructions may be detailed at the time of their use.
+```bash
+# macOS and Linux with Homebrew
+brew install python xsv entr
+# Windows with Chocolatey
+#   - Use Cargo for xsv
+#   - entr unavailable natively, use WSL
+choco install python
+# Windows with Scoop
+#   - entr unavailable natively, use WSL
+scoop install xsv python
+# Ubuntu/Debian Linux
+#   - Use Cargo for xsv
+apt install entr python3
+# Alpine Linux
+#   - Use Cargo for xsv
+apk add entr python3
+# Cargo+Crates.io for Rust programs, https://crates.io/install
+cargo install xsv
+```
 
 ### Homebrew `Brewfile` for most dependencies {#sec:install_homebrew}
 
