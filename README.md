@@ -8,21 +8,23 @@ is especially true of the tables.
 
 ## Contributing
 
-Some `pandoc` filters easily available are required:
+Run `brew bundle` to install the easily available dependencies to build this
+workshop document.
 
-```
-brew install pandoc-crossref pandoc-include-code pandoc aha make
-```
-
-and not so easily available:
+And then there's the no so easily available:
 
 * [`panpipe`](https://hackage.haskell.org/package/panpipe "warning: takes forever to compile all dependencies and install") ([git](http://chriswarbo.net/git/panpipe/git/index.html))
-
-**TODO:** Make Homebrew formulae for these and submit them upstream.
 
 Run `make open` to compile the PDF and open it in a PDF viewer.
 
 Run `make watch` to start an edit-compile loop.
 
-Leave it better than you found it.
+The № 1 rule? _Leave it better than you found it._
 
+## License
+
+This work is licensed under Creative Commons BY-NC-SA 4.0.
+You are free to share and adapt this workshop but you must provide attribution
+to Colin Dean, you must share your changes under the same license, and you may
+not use this workshop for commercial purposes.
+See [LICENSE.md](LICENSE.md) for more infromation.
