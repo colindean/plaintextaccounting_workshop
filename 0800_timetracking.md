@@ -18,7 +18,7 @@ timelog mode. Interacting with these time records is easy: you can use
 `balance` and `register` just as if these records were normal transactions.
 @Lst:timekeeping_bal shows the balance report.
 
-Listing: A simple timekeeping transaction record {#lst:timekeeping}
+Listing: A simple timekeeping transaction record (`time.ledger`) {#lst:timekeeping}
 
 ```{.ledger pipe="tee time.ledger"}
 ; My convention:

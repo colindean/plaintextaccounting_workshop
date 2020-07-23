@@ -7,7 +7,7 @@ or will soon find yourself comfortable with some light programming, so you
 might be tempted to _script_ these executions in something like
 @lst:simple_script.
 
-Listing: A simple `ledger` script {#lst:simple_script}
+Listing: A simple `ledger` script (`simple_script.sh`) {#lst:simple_script}
 
 ```{.bash pipe="tee simple_script.sh" .numberLines}
 #!/usr/bin/env bash
@@ -34,7 +34,7 @@ ${LEDGER} --begin "${YEAR}" --end "$(( ++YEAR ))" balance ^Income ^Expenses
 
 As @lst:simple_script_exec shows, this is a pretty cool first attempt.
 
-Listing: The simple script from @lst:simple_script passed `ex.ledger` {#lst:simple_script_exec}
+Listing: The simple script from @lst:simple_script, invoked with `bash simple_script.sh ex.ledger 2017` {#lst:simple_script_exec}
 
 ```{pipe="sh"}
 bash simple_script.sh ex.ledger 2017

@@ -40,20 +40,42 @@ navigation.
 It may be useful to have two side-by-side copies of the document open: one for
 reading the prose and one for copying text from the referenced listing.
 
-Most listings can be copied out of the PDF by highlighting them, copying the
-text to your clipboard, and pasting into a text editor. Some document readers
-may capture the line numbers in the process. You can either highlight
-line-by-line or refer to the companion files for this workshop to find the
-text. Apple Preview seems to work as expected while Google Drive PDF Viewer
-copies the line numbers all the time – don't use it!
+There are two ways to use the examples provided in listings:
 
-Listing: An example listing {#lst:conventions}
+1. You should have received along with this PDF a compressed archive containing
+   some supplementary files.
+   See @sec:artifacts for what files are in it and how to verify that you have
+   the correct archive file for this version of the workshop.
+   Unpack that archive.
+   Each listing connected to a file in that archive contains a filename in
+   parentheses at the end of the caption.
+   You can use the content of this file as if you'd copied the file by hand out
+   of the workshop text!
+1. Most listings can be copied out of the PDF by highlighting them, copying the
+   text to your clipboard, and pasting into a text editor. Some document readers
+   may capture the line numbers in the process. You can either highlight
+   line-by-line or refer to the companion files for this workshop to find the
+   text. Apple Preview seems to work as expected while Google Drive PDF Viewer
+   copies the line numbers all the time – don't use it!
+1. You could type each example by hand directly out of the PDF. This is a bit
+   laborious but it can help you learn along the way by doing, approximately
+   the same value as copying notes from a teacher's chalkboard.
 
-```bash
-# This is a listing.
+Listing: An example listing (`example_listing.sh`) {#lst:conventions}
+
+```{.bash pipe="tee example_listing.sh"}
+#!/usr/bin/env bash
+# run me with:
+#    bash example_listing.sh
 echo "It contains some shell script."
 for i in `seq 1 4`; do
   echo "This is line $i."
 done
-echo "Be sure you can copy and paste this into a file."
+echo "You can find this file at example_listing.sh,"
+echo "you can copy and paste this into a file,"
+echo "or you can retype it by hand…"
+```
+
+<!-- just to make sure the above works -->
+```{pipe="bash example_listing.sh > /dev/null"}
 ```

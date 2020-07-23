@@ -69,9 +69,9 @@ II](https://abstractions.io) software conference, this author tracked those
 donations as inventory in the non-profit organization's `ledger` records as
 shown in @lst:abstractions_tix.
 
-Listing: Tracking inventory with `ledger` {#lst:abstractions_tix}
+Listing: Tracking inventory with `ledger` (`tickets.ledger`) {#lst:abstractions_tix}
 
-```{.ledger pipe="tee tickets.ledger | ledger -f - print"}
+```{.ledger pipe="ledger -f - print | tee tickets.ledger"}
 2019-07-24 * Ticket Donation from Numerius Negidius
   Income:Donations:InKind     -1 "Abstractions II Ticket"
   Assets:Tickets
@@ -87,9 +87,9 @@ Recording in multiple currencies is easy when you know precisely the
 exchanged amounts. @lst:simple_multicurrency and its balance report in
 @lst:simple_multicurrency_bal show this.
 
-Listing: A simple pair of multi-currency transactions {#lst:simple_multicurrency}
+Listing: A simple pair of multi-currency transactions (`multicurrency.ledger`) {#lst:simple_multicurrency}
 
-```{.ledger pipe="tee multicurrency.ledger | ledger -f - print"}
+```{.ledger pipe="ledger -f - print | tee multicurrency.ledger"}
 2013-01-31 * Duty Free Currency Exchange
   Assets:Cash:Bank:Checking   -50.00 USD
   Assets:Cash:Wallet           250.00 CRC ; Costa Rican Colónes
@@ -116,9 +116,9 @@ In fact, this author has caught small math bugs and keeps a running account
 called `Equity:RoundingErrors` just to capture small differences in reported
 and actual math.
 
-Listing: Buying some Bitcoin and tracking with `ledger` {#lst:bitcoin}
+Listing: Buying some Bitcoin and tracking with `ledger` (`bitcoin.ledger`) {#lst:bitcoin}
 
-```{.ledger pipe="tee bitcoin.ledger | ledger -f - print" .numberLines}
+```{.ledger pipe="tee bitcoin.ledger" .numberLines}
 2016-12-17 * Coinbase
   Assets:Cash:Banks:Checking    -1000.00 USD
   Expenses:Fees:Banks:Coinbase     15.00 USD
@@ -152,6 +152,8 @@ this workshop.
 [^ath]: Fun fact: this is the date and amount of Bitcoin's all-time high as of
   the writing of this document.
 
+::: protip
+
 **PROTIP**: Another way to let `ledger` help you figure out complex transactions is to
 purposefully omit a posting that you know is necessary. Write the contents of
 @lst:bitcoin to a file `bitcoin.ledger`, remove line 9,
@@ -163,6 +165,8 @@ Notice how it worked and showed the same amount without having to calculate it
 manually or rely on a reported amount from the brokerage.
 Note that his method is exactly how this author knew how much to put in
 the posting in @lst:bitcoin!
+
+:::
 
 Listing: An example of an unbalanced transaction error {#lst:unbalanced_error}
 
@@ -185,7 +189,7 @@ pricing information to reflect changes in the value of commodities held.
 Run `bal` on this transaction and you'll see a negative balance of $7,569 in
 the checking account.
 
-Listing: A basic stock purchase {#lst:stock_purchase}
+Listing: A basic stock purchase (`stock.ledger`) {#lst:stock_purchase}
 
 ```{.ledger pipe="tee stock.ledger"}
 commodity USD
@@ -197,10 +201,10 @@ commodity USD
   Assets:Cash:Banks:Checking
 ```
 
-Let's create a price database in `prices.db`. See @lst:colin_prices for some
+Let's create a price database in `colin_prices.db`. See @lst:colin_prices for some
 content.
 
-Listing: Weekly COLIN prices in June and July 2020 {#lst:colin_prices}
+Listing: Weekly COLIN prices in June and July 2020 (`colin_prices.db`) {#lst:colin_prices}
 
 ```{.ledger pipe="tee colin_prices.db"}
 ; entry format:
@@ -237,9 +241,9 @@ What happens to the price if you change the `--end` date?
 A commodity could be a house, condominium, or other ownable real property!
 It's all in how you represent it in your transaction log.
 
-Listing: Example transactions for a house {#lst:house_transactions}
+Listing: Example transactions for a house (`house.ledger`) {#lst:house_transactions}
 
-```{pipe="tee house.ledger | ledger -f - print"}
+```{pipe="ledger -f - print | tee house.ledger"}
 commodity USD
   format 1,000.00 USD
   alias $
@@ -269,6 +273,8 @@ You can easily check your mortgage interest paid to verify your records against
 the IRS Form 1098-INT that your bank issues yearly to support mortgage interest
 deductions in the United States.
 
+::: tryit
+
 **TRY IT:** Write a balance query against the records in @lst:house_transactions
 that show
 
@@ -276,12 +282,11 @@ that show
 2. Mortgage interest paid since the start of the loan
 3. The equity [^equity] in the house as of the latest transaction
 
+:::
+
 [^equity]: Equity is the value of the property minus the mortgage, divided by the value of the property.]
 
 You can track the value of your home in a prices database, too, and account for
 estimated fluctuations in its value or track appraisal prices as a base when
 refinancing or getting a home equity loan.
-
-
-
 

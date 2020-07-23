@@ -16,6 +16,19 @@ in a clear summary view.
 Run `ledger --file 1.ledger balance` to see a balance report.
 It should look like the contents of @lst:basics_balance.
 
+::: protip
+
+**PROTIP**: Note that `-f` and `--file` are synonymous and used interchangeably throughout
+this workshop.
+There may be other short options, i.e. one character preceded by one dash, used in place of
+other long option, i.e. two dashed preceding a word or a couple of words.
+It's a good practice to use long options when writing a script and short
+options when when typing a command in a terminal.
+Not all programs offer both for each option, so keep your eyes out!
+Fortunately, most CLI options in `ledger` do have a short and long version.
+
+:::
+
 Listing: Balance report for @lst:basics_basic {#lst:basics_balance}
 
 ```{pipe="sh"}
@@ -23,9 +36,9 @@ ledger -f root/examples.ledger balance --begin 2017/06/26 --end 2017/06/27
 ```
 
 @Lst:examples shows a more realistic transaction log. Write it to a file
-`examples.ledger` so that you can use it for some querying experimentation.
+`ex.ledger` so that you can use it for some querying experimentation.
 
-Listing: A fuller example {#lst:examples}
+Listing: A fuller example (`ex.ledger`) {#lst:examples}
 
 ```{pipe="sh | ledger -f - print | tee ex.ledger"}
 cat root/examples.ledger
@@ -49,7 +62,7 @@ To see this more in action, check out the transactions in
 @lst:account_tree_effects. Notice that the posting on line 5 is to an account
 that other postings have used a subaccount.
 
-Listing: Account tree effects {#lst:account_tree_effects}
+Listing: Account tree effects (`account_tree_effects.ledger`) {#lst:account_tree_effects}
 ```{.ledger pipe="tee account_tree_effects.ledger" .numberLines}
 2020/07/01 Black Forge Coffee
   Expenses:Restaurants:Coffee   5
@@ -69,9 +82,13 @@ Note that the `Expenses` on line 1 reflects credits of 35 and while the sum of t
 accounts is only 25. Note that the sum of the leaf accounts in `Liabilities` on
 line 4 is 35.
 
+::: protip
+
 **PROTIP:** It's a good idea to post transactions to the leaf accounts or subaccounts.
 
-Listing: Account tree effects balance report {#lst:account_tree_effects_balance}
+:::
+
+Listing: Balance report on `account_tree_effects.ledger` {#lst:account_tree_effects_balance}
 ```{pipe="ledger -f account_tree_effects.ledger bal" .numberLines}
 ```
 
@@ -101,7 +118,7 @@ It should look like the contents of @lst:basics_register.
 Listing: Register report for @lst:basics_basic {#lst:basics_register}
 
 ```{pipe="sh"}
-ledger -f root/examples.ledger register --begin 2017/06/26 --end 2017/06/27
+ledger -f 1.ledger register
 ```
 
 Register reports on a single transaction are pretty boring, so
@@ -127,5 +144,8 @@ are abbreviated: this is a result of the aforementioned width limitation.
 It really is a good idea to use `ledger` on a wide terminal, at least 120
 columns. Run `echo $COLUMNS` and you'll likely see your current column width.
 
+::: protip
+
 **PROTIP:** Now is a great time to widen your terminal window to at least 120 columns.
 
+:::

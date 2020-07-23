@@ -17,8 +17,12 @@ Listing: Assets-only report on @lst:examples {#lst:examples_assets}
 ledger -f ex.ledger balance Assets
 ```
 
-Try some other accounts present in `ex.ledger` to see the balance for top-level accounts
+::: tryit
+
+**TRY IT:** Try some other accounts present in `ex.ledger` to see the balance for top-level accounts
 as well as subaccounts.
+
+:::
 
 If you're not sure what accounts are available to be queried, `ledger` can
 help.
@@ -95,7 +99,7 @@ metadata associated with a transaction. For example, you could track the
 contact information of payees or maybe a warranty expiration date for something
 you purchased.
 
-Listing: A transaction with a tag comment {#lst:tagged_tx}
+Listing: A transaction with a tag comment (`tx_tags.ledger`) {#lst:tagged_tx}
 
 ```{.ledger pipe="ledger -f - print | tee tx_tags.ledger"}
 2020-06-29 Costco
@@ -166,11 +170,15 @@ account, but not at the beginning. Try "Expenses:Assets". Now, try the cashflow
 report as described in @sec:cashflow. What happened? What can you do to fix
 the report so that it will work with this account name in your records?
 
+::: protip
+
 **PROTIP:** Avoid using the top-level accounts anywhere in a subaccount.
 That is, the words `Assets`, `Expenses`, `Income`, `Liabilities`, and `Equity`
 should only ever appear at the _beginning_ of account names.
 If you don't do this, you will _have to_ use `^` in your queries involving
 these top-level accounts. It's not a bad idea to do that anyway!
+
+:::
 
 ## Sorting
 

@@ -15,13 +15,17 @@ Start your favorite text editor and terminal emulator [^terminals] and you'll ge
 Recall from the introductory presentation in @sec:intro_talk the basic format
 of a `ledger` transaction, shown in @lst:basics_basic.
 
-Listing: A basic transaction {#lst:basics_basic}
+Listing: A basic transaction (`1.ledger`) {#lst:basics_basic}
 
-```{.ledger include="examples.ledger" startLine=8 endLine=10 .numberLines}
+```{.ledger pipe="tee 1.ledger" .numberLines}
+2017-06-26 Commonplace Coffee
+  Expenses:Restaurants:Coffee   3.00
+  Assets:Cash:Wallet           -3.00
+
 ```
 
-In @lst:basics_basic, line 8 shows the _transaction date_ and _payee_.
-Lines 9 and 8 shows a _posting_ comprised of an _account_ and an _amount_.
+In @lst:basics_basic, line 1 shows the _transaction date_ and _payee_.
+Lines 2 and 10 shows a _posting_ comprised of an _account_ and an _amount_.
 
 All transactions must balance. That is, the amount credited must
 equal the amount debited: credits minus debits must equal zero.
@@ -37,9 +41,13 @@ One such convenience is that `ledger` allows transactions to omit the _amount_ o
 The missing amount is calculated and is equal to whatever amount is necessary
 to balance the transaction.
 
-Listing: A basic transaction with an automatically-balanced posting amount {#lst:basics_basic_omitamount}
+Listing: A basic transaction with an automatically-balanced posting amount (`2.ledger`) {#lst:basics_basic_omitamount}
 
-```{.ledger include="examples.ledger" startLine=12 endLine=14 .numberLines}
+```{.ledger pipe="tee 2.ledger" .numberLines}
+2017-06-26 Commonplace Coffee
+  Expenses:Restaurants:Coffee   3.00
+  Assets:Cash:Wallet
+
 ```
 
 You can also supply comments for a transaction or posting.
@@ -48,15 +56,40 @@ you want.
 A comment in the format `key: value` creates a transaction _tag_ accessible in
 queries. You'll learn more about that in @sec:tx_walkthrough and @sec:querying_tagged_transactions.
 
-Listing: A basic transaction with a comment {#lst:basics_basic_comment}
+Listing: A basic transaction with a comment (`3.ledger`) {#lst:basics_basic_comment}
 
-```{.ledger include="examples.ledger" startLine=16 endLine=19 .numberLines}
+```{.ledger pipe="tee 3.ledger" .numberLines}
+2017-06-26 Commonplace Coffee
+  ; cold brew
+  Expenses:Restaurants:Coffee   3.00
+  Assets:Cash:Wallet           -3.00
+
 ```
 
 ## Walkthrough of some common basic transactions {#sec:tx_walkthrough}
 
 There are some other important things to highlight about transaction formatting.
 @lst:common_transactions lists a few common example transactions worth explaining.
+
+Listing: Common transaction examples (`walkthrough.ledger`) {#lst:common_transactions}
+
+```{.ledger pipe="ledger -f - print | tee walkthrough.ledger" .numberLines}
+2020-07-15 ! PA Department of Revenue Income Tax Due
+  ; check_number: 1701
+  Expenses:Taxes:EarnedIncome:Pennsylvania    64.00 USD
+  Assets:Cash:Banks:Dollar                   -64.00 USD
+
+2020-07-17 * Code and Supply Heartifacts Tickets
+  ; ticket_reference: 0xDECAFBAD
+  Expenses:Conferences:Registration    50.00 USD
+  Liabilities:CreditCard:Visa         -50.00 USD
+
+2020-07-15=2020-07-23 IRS Tax Due
+  ; check_number: 1700
+  * Expenses:Taxes:EarnedIncome:Federal    64.00 USD
+  ! Assets:Cash:Banks:Dollar              -64.00 USD = -128.00 USD
+
+```
 
 Transactions have a state noting that they are uncleared, pending, or cleared.
 This is useful to note transactions that you may need to revisit and amend,
@@ -95,24 +128,4 @@ Treat balance assertions like regression tests – tests that warn when fixed bu
 This workshop doesn't use balance assertions beyond this because of the
 inherent difficulty in tracking them down.
 Learning to use them is an exercise left to the reader!
-
-Listing: Common transaction examples {#lst:common_transactions}
-
-```{.ledger pipe="ledger -f - print | tee walkthrough.ledger" .numberLines}
-2020-07-15 ! PA Department of Revenue Income Tax Due
-  ; check_number: 1701
-  Expenses:Taxes:EarnedIncome:Pennsylvania    64.00 USD
-  Assets:Cash:Banks:Dollar                   -64.00 USD
-
-2020-07-17 * Code and Supply Heartifacts Tickets
-  ; ticket_reference: 0xDECAFBAD
-  Expenses:Conferences:Registration    50.00 USD
-  Liabilities:CreditCard:Visa         -50.00 USD
-
-2020-07-15=2020-07-23 IRS Tax Due
-  ; check_number: 1700
-  * Expenses:Taxes:EarnedIncome:Federal    64.00 USD
-  ! Assets:Cash:Banks:Dollar              -64.00 USD = -128.00 USD
-
-```
 

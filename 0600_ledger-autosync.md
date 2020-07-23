@@ -21,15 +21,18 @@ csv_id = hashlib.sha256(smushed_row).hexdigest()
 ```
 
 Run once on your exported CSV to visually check the output using the command in @lst:export_show.
+Note that `bank_export_20200615.csv` is _not_ included in the supplementary files
+for this workshop (@sec:artifacts), but is a theoretical file containing CSV
+data directly from your bank.
 
-Listing: Showing the output of `ledger-autosync` running on export_20200615.csv {#lst:export_show}
+Listing: `ledger-autosync` running on `bank_export_20200615.csv` {#lst:export_show}
 
 ```bash
 ledger-autosync \
     -a "Assets:Cash:Banks:Dollar:Checking" \
     -l 2020.ledger \
     --unknown-account "Equity:Unknown" \
-    export_20200615.csv
+    bank_export_20200615.csv
 ```
 
 Then, run it again, but this time _append_ to your existing transaction record using output redirection `>>`, as shown in @lst:export_append.
@@ -41,7 +44,7 @@ ledger-autosync \
     -a "Assets:Cash:Banks:Dollar:Checking" \
     -l 2020.ledger \
     --unknown-account "Equity:Unknown" \
-    export_20200615.csv >> 2020.ledger
+    bank_export_20200615.csv >> 2020.ledger
 ```
 
 ## Cleaning data
@@ -50,9 +53,9 @@ Sometimes, CSV isn't cleanly parseable. If you don't already know this, you will
 
 For example, Simple, one of my banks, emits CSV that Python's CSV library cannot reliably automatically determine its delimiter. So I use a convenient tool called `xsv` to sort it (because it comes in reverse order) and then add quotation marks explicitly in `clean_simple.sh`, shown in @lst:cleancsv.
 
-Listing: clean_simple.sh {#lst:cleancsv}
+Listing: `clean_simple.sh` {#lst:cleancsv}
 
-```bash
+```{.bash pipe="tee clean_simple.sh"}
 #!/usr/bin/env bash
 INPUT="$1"
 xsv sort --select Date "${INPUT}" | \
@@ -70,7 +73,7 @@ Don't worry too much about formatting. We'll use `ledger` itself to reformat and
 It might be helpful to have a little program showing you what transactions remain to be categorized. [`entr`](http://eradman.com/entrproject/) is a great little tool for watching files for changes and running a command when they change:
 
 ```bash
-echo 2020.ledger | entr -a -c -p -r ledger -w -f /_ reg Equity:Unknown
+echo 2020.ledger | entr -acpr ledger -w -f /_ reg Equity:Unknown
 ```
 
 Once you're done with this, commit!
@@ -138,5 +141,4 @@ ledger -f 2020.ledger bal
 If the sort worked and didn't alter your output, then commit again!
 
 We have to do file rename dance because `ledger` reads in a stream and outputs immediately, so we'd risk overwriting our log file!
-
 
