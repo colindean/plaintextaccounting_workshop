@@ -9,16 +9,27 @@ MD_FILES=$(sort $(wildcard 0*.md))
 LEDGER_FILES=$(sort $(wildcard *.ledger))
 
 HEADER_TEXS=LICENSE.tex REPO.tex
+HEADER_HTMLS=$(HEADER_TEXS:%.tex=%.html)
 
 all: $(OUTPUTS)
 
-$(OUTPUT).%: $(MD_FILES) $(CONFIG) $(HEADER_TEXS)
+$(OUTPUT).pdf: $(MD_FILES) $(CONFIG) $(HEADER_TEXS)
 	pandoc \
 		--defaults $(CONFIG) \
 		$(MD_FILES) \
 		-o $@ \
 		-M "date=v$(shell date +%Y.%m.%d)$(PATCH)" \
-		-M "crossrefYaml=pandoc-crossref.yaml"
+		-M "crossrefYaml=pandoc-crossref.yaml" \
+		$(addprefix --include-before-body=, $(HEADER_TEXS))
+
+$(OUTPUT).html: $(MD_FILES) $(CONFIG) $(HEADER_HTMLS)
+	pandoc \
+		--defaults $(CONFIG) \
+		$(MD_FILES) \
+		-o $@ \
+		-M "date=v$(shell date +%Y.%m.%d)$(PATCH)" \
+		-M "crossrefYaml=pandoc-crossref.yaml" \
+		$(addprefix --include-before-body=, $(HEADER_HTMLS))
 
 .PHONY: open
 open: $(PDF_OUTPUT)
@@ -26,6 +37,9 @@ open: $(PDF_OUTPUT)
 
 %.tex: %.md
 	pandoc --from=markdown+autolink_bare_uris --to=latex $< -o $@
+
+%.html: %.md
+	pandoc --from=markdown+autolink_bare_uris --to=html $< -o $@
 
 WATCHABLES=Makefile $(MD_FILES) $(CONFIG) $(LEDGER_FILES) $(HEADER_TEXS:%.tex=%.md) refs.bibtex
 

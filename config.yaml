@@ -27,7 +27,7 @@ metadata:
     with a standard.
 
     Thank you to my parents, who involved me in financial decisions from
-    and early age and who taught me how to save, track, and do good with my money
+    an early age and who taught me how to save, track, and do good with my money
     even when theirs was exceptionally tight.
 
     And lastly, thank you to you who are seeking to improve how you live your
@@ -37,7 +37,7 @@ metadata:
   # filter metadata
   # crossrefYaml: pandoc-crossref.yaml
 
-include-before-body: ['LICENSE.tex','REPO.tex']
+# include-before-body: ['LICENSE.tex','REPO.tex']
 
 variables:
   # physical paper and layout settings
