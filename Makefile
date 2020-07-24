@@ -1,7 +1,8 @@
 OUTPUT=pta_workshop
 PDF_OUTPUT=$(OUTPUT).pdf
+HTML_OUTPUT=$(OUTPUT).html
 
-OUTPUTS=$(PDF_OUTPUT)
+OUTPUTS=$(PDF_OUTPUT) $(HTML_OUTPUT)
 
 CONFIG=config.yaml
 MD_FILES=$(sort $(wildcard 0*.md))
@@ -11,7 +12,7 @@ HEADER_TEXS=LICENSE.tex REPO.tex
 
 all: $(OUTPUTS)
 
-$(PDF_OUTPUT): $(MD_FILES) $(CONFIG) $(HEADER_TEXS)
+$(OUTPUT).%: $(MD_FILES) $(CONFIG) $(HEADER_TEXS)
 	pandoc \
 		--defaults $(CONFIG) \
 		$(MD_FILES) \

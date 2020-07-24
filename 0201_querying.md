@@ -108,8 +108,7 @@ Bank transaction errors seem to be a rarity these days, but manually reviewing
 even after importing transactions manually is an excellent way to ensure that
 no transactions were omitted or have incorrect information.
 The register is a great way to see all transactions involving a certain account
-or payee or date. You'll learn more about this in [@sec:querying_accounts,
-@sec:querying_payees, @sec:advanced_queries].
+or payee or date. You'll learn more about this in @sec:querying_accounts and @sec:querying_payees.
 
 To see a register report for the transasction shown in @lst:basics_basic,
 run `ledger --file 1.ledger register`.
