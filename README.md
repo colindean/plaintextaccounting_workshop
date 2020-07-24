@@ -1,12 +1,18 @@
 # Plain Text Accounting Workshop
 
-:warning: **This is under active and heavy development.** :warning:
+:warning: :warning:
+If you're wanting to follow the workshop,
+download the PDF (or the HTML) and the tar.gz from the
+[releases page](https://github.com/colindean/plaintextaccounting_workshop/releases/latest).
+
+If you're reading the this README on the linked repo, you're not reading the right thing:
+the instructions below are for _building_ the workshop distributable files.
+
+## Contributing to the Workshop
 
 The Markdown files in this directory are [`pandoc`-flavored
 Markdown](https://pandoc.org) so they may not correctly render on GitHub. This
 is especially true of the tables.
-
-## Contributing
 
 Run `brew bundle` to install the easily available dependencies to build this
 workshop document.
