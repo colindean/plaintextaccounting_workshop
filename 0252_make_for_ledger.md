@@ -373,3 +373,115 @@ The more cores, the more tasks can be run simultaneously.
 
 :::
 
+## Building an HTML report with `pandoc`
+
+`pandoc` is a great tool for converting documents.
+This workshop was produced using it!
+It is able to convert dozens of document formats into dozens of other
+formats.
+Notably, it's able to read [Markdown](https://commonmark.org/) and
+produce [HTML](https://en.wikipedia.org/wiki/HTML "The language websites are built in").
+In this section, you'll add a few convenient `Makefile` tasks
+and use a `pandoc` filter written in Lua to create a simple HTML report.
+
+First, you'll need to write @lst:filter-pipe to a file `filter-pipe.lua` or
+retrieve it from the supplementary artifacts archive in @sec:artifacts.
+
+Listing: A simple `pandoc` filter to execute code in a code block (`filter-pipe.lua`) {#lst:filter-pipe}
+
+```{.lua pipe="sh"}
+cat root/filter-pipe.lua | tee filter-pipe.lua
+```
+
+Next, you'll need some very basic `pandoc`-flavored Markdown to form a basis of
+the document.
+Write @lst:pandoc_markdown to `statement.md`.
+Note that the name of your `Makefile` may be different if you didn't just copy
+from the artifacts archive.
+
+Listing: A simple `pandoc` Markdown document with front matter metadata (`statement.md`) {#lst:pandoc_markdown}
+
+```{.markdown pipe="tee statement.md"}
+---
+title: "My financial statement"
+---
+
+# My financial statement
+
+## Cashflow
+
+~~~pipe
+make -f Makefile.graphs cashflow LEDGER_FILE=ex.ledger
+~~~
+
+
+## Net worth
+
+~~~pipe
+make -f Makefile.graphs networth LEDGER_FILE=ex.ledger
+~~~
+
+```
+
+Next, process @lst:pandoc_markdown with
+`pandoc statement.md -o statement.html --lua-filter filter-pipe.lua`
+
+```{pipe="sh"}
+pandoc statement.md -o statement.html --lua-filter filter-pipe.lua
+```
+
+Open up `statement.html` in your browser.
+You're on your way to a great web-based way to produce your own reports.
+
+Automate it a bit by adding @lst:pandoc_makefile to your `Makefile`.
+
+Listing: A `Makefile` task for generating your statement (`Makefile.07.pandoc.txt`) {#lst:pandoc_makefile}
+
+```{.makefile pipe="tee Makefile.07.pandoc.txt"}
+PANDOC=pandoc
+STATEMENT_TEMPLATE=statement.md
+STATEMENT_OUTPUT=$(STATEMENT_TEMPLATE:%.md=%.html)
+PANDOC_LUA_FILTERS=filter-pipe.lua
+
+.PHONY: statement
+statement: $(STATEMENT_OUTPUT)
+
+$(STATEMENT_OUTPUT): $(STATEMENT_TEMPLATE) $(LEDGER_FILE)
+	$(PANDOC) $< -o $@ $(addprefix --lua-filter, $(PANDOC_LUA_FILTERS))
+
+```
+
+Run `make statement` to generate your statement with the content of
+@lst:pandoc_makefile in your `Makefile` or run it from the artifacts archive
+with `make -f Makefile.pandoc statement`.
+
+```{pipe="sh"}
+cat Makefile.*.txt > Makefile.pandoc
+```
+
+### Taking report generation to the next steps
+
+There exist a nearly endless variety of strategies for producing reports in
+this manner.
+One strategy is to use `make` to produce a series of text files. These text
+files can be pulled into a document using a simple filter like the Lua filter
+in @lst:filter-pipe or with a more elaborate filter such as `panpipe` or
+`pandoc-include-code`.
+The latter is available in the Homebrew repository and can be used to read in
+files, while `filter-pipe.lua` and `panpipe` can execute `make` tasks directly.
+Writing to a file will run faster because of `make` parallelism: multiple
+reports can be executed simultaneously as opposed to serial execution within
+a `pandoc` conversion process.
+
+::: tryit
+
+**TRY IT:** Try building more elaborate reports by creating more `make` tasks
+that write files to disk.
+Read those files using `cat filename.txt` and the pipe class on a codeblock as
+shown in @lst:pandoc_markdown.
+
+Note: this could be an hour's task unto itself! You might want to skip this
+task during the workshop and come back to it if you have time or after the
+guided workshop is over.
+
+:::

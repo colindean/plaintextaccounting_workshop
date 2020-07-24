@@ -17,6 +17,8 @@ GNU `make`         Task- and file-based build system    https://www.gnu.org/soft
 
 `gnuplot`          Renders graphs from data files       http://www.gnuplot.info/
 
+`pandoc`           Universal document converter         https://pandoc.org
+
 `xsv`              CSV querying and manipulation tool   https://github.com/BurntSushi/xsv
 
 `entr`             Runs a command when any in           https://eradman.com/entrproject/
@@ -75,16 +77,16 @@ Listing: Package installer lines for the basics {#lst:install_basics}
 
 ```bash
 # macOS and Linux with Homebrew
-brew install ledger make gnuplot
+brew install ledger make gnuplot pandoc
 # Windows with Chocolatey
-choco install ledger make gnuplot
+choco install ledger make gnuplot pandoc
 # Windows with Scoop
 #   - ledger unavailable, use choco for it
-scoop install make gnuplot
+scoop install make gnuplot pandoc
 # Ubuntu/Debian Linux
-apt install ledger make gnuplot
+apt install ledger make gnuplot pandoc
 # Alpine Linux
-apk add ledger make gnuplot
+apk add ledger make gnuplot pandoc
 ```
 
 ### The Advanced Dependencies {#sec:install_advanced}
@@ -135,6 +137,7 @@ brew 'gnuplot'
 brew 'entr'
 brew 'xsv'
 brew 'python'
+brew 'pandoc'
 ```
 
 ### Python dependencies with `pip` {#sec:install_pip}
@@ -190,5 +193,7 @@ echo "# make"
 make -v | head -n 1
 echo "# gnuplot"
 gnuplot --version
+echo "# pandoc"
+pandoc --version | head -n 1
 ```
 
