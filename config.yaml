@@ -3,9 +3,9 @@ from: markdown+autolink_bare_uris
 
 metadata:
   # document metadata
-  title: "Command-line finances using the Plain Text Accounting ecosystem"
+  title: "Command-Line Finances Using the Plain Text Accounting Ecosystem"
   subtitle: "A workshop meant to improve personal finance confidence using software skills"
-  author: ["Colin Dean","@colindean"]
+  author: ["Colin Dean","@colindean","#plaintextaccounting"]
   subject: "Plain Text Accounting"
   keywords:
     - plain text accounting
