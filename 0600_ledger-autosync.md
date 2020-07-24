@@ -123,7 +123,7 @@ Use the [built-in converters](https://github.com/egh/ledger-autosync/blob/cc6d9f
 
 ## The tedium: categorizing transactions using accounts in your account tree {#sec:categorizing}
 
-Now that you've got some data, you're onto the tedious task of categorizing transactions by replacing the `Equity:Unknown` account with something meaningful.
+Now that you've got some data, you're onto the tedious task of categorizing transactions by replacing the `Equity:Unknown` account with something meaningful. If you need an idea of some accounts to use, see @sec:fin_acct_ref, which contains a list of accounts this author has used in some form.
 
 Don't worry too much about formatting. We'll use `ledger` itself to reformat and sort the transactions you're modifying.
 

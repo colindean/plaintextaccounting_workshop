@@ -89,8 +89,11 @@ Listing: A register of Commonplace Coffee purchases `ledger -f ex.ledger reg pay
 ```{pipe="sh"}
 ledger -f ex.ledger reg payee "Commonplace Coffee"
 ```
+::: tryit
 
-Try finding the other payees through a payee query.
+**TRY IT:** Try finding the other payees through a payee query.
+
+:::
 
 ## Querying Tagged Transactions {#sec:querying_tagged_transactions}
 
@@ -165,10 +168,14 @@ of another regex marker, such as the `$` which indicates to only look at the
 end of a line or `^`, which only matches from the beginning, changes that
 default.
 
-Try this: create a transaction that includes the word "Assets" in a posting's
+::: tryit
+
+**TRY IT:** create a transaction that includes the word "Assets" in a posting's
 account, but not at the beginning. Try "Expenses:Assets". Now, try the cashflow
 report as described in @sec:cashflow. What happened? What can you do to fix
 the report so that it will work with this account name in your records?
+
+:::
 
 ::: protip
 

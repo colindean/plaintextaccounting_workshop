@@ -90,6 +90,10 @@ exchanged amounts. @lst:simple_multicurrency and its balance report in
 Listing: A simple pair of multi-currency transactions (`multicurrency.ledger`) {#lst:simple_multicurrency}
 
 ```{.ledger pipe="ledger -f - print | tee multicurrency.ledger"}
+2013-01-01 * Opening Balances
+  Assets:Cash:Bank:Checking   300.00 USD
+  Equity:OpeningBalances
+
 2013-01-31 * Duty Free Currency Exchange
   Assets:Cash:Bank:Checking   -50.00 USD
   Assets:Cash:Wallet           250.00 CRC ; Costa Rican Colónes
@@ -270,7 +274,7 @@ With your mortgage payments tracked like this, your house is in your Assets
 and your mortgage is in Liabilities. Therefore, you're tracking them in your net worth,
 as recommended in @sec:networth.
 You can easily check your mortgage interest paid to verify your records against
-the IRS Form 1098-INT that your bank issues yearly to support mortgage interest
+the IRS Form 1098-INT that your American bank issues yearly to support mortgage interest
 deductions in the United States.
 
 ::: tryit
@@ -284,7 +288,7 @@ that show
 
 :::
 
-[^equity]: Equity is the value of the property minus the mortgage, divided by the value of the property.]
+[^equity]: Equity is the value of the property minus the mortgage, divided by the value of the property.
 
 You can track the value of your home in a prices database, too, and account for
 estimated fluctuations in its value or track appraisal prices as a base when

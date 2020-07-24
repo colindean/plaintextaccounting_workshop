@@ -44,9 +44,9 @@ bash simple_script.sh ex.ledger 2017
 exists on lines 2-9.
 It takes the transaction record as the first parameter on line 1.
 It builds a convenience variable on lines 12-13 to make executing `ledger` easier.
-It executes ledger to produce a net worth report (@sec:networth) on line 16.
+It executes `ledger` to produce a net worth report (@sec:networth) on line 16.
 It takes an optional second parameter on line 18 for the year to use in the
-cash flow report (@sec:cashflow) it executes on line 20.
+cash flow report (@sec:cashflow) that it executes on line 20.
 
 This is a good start and a rational way to automate reporting.
 However, you can quickly take this to the next logical step by shifting your

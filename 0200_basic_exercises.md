@@ -25,7 +25,7 @@ Listing: A basic transaction (`1.ledger`) {#lst:basics_basic}
 ```
 
 In @lst:basics_basic, line 1 shows the _transaction date_ and _payee_.
-Lines 2 and 10 shows a _posting_ comprised of an _account_ and an _amount_.
+Lines 2 and 3 shows a _posting_ comprised of an _account_ and an _amount_.
 
 All transactions must balance. That is, the amount credited must
 equal the amount debited: credits minus debits must equal zero.

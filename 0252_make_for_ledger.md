@@ -56,7 +56,7 @@ you're about to create, so let's use a fantastic way of documenting the
 `Makefile`: creating a "doc comment" that a task can parse out of the
 file and display. While you're at it, create another task that will help you
 open the year's file without having to remember – or think about – what year it is.
-The 2020s have been a a long decade for all of us!
+The 2020s have been a long decade for all of us!
 
 Listing: Helpful tasks for your `Makefile` (`Makefile.02.help.txt`) {#lst:makefile_help}
 
@@ -151,9 +151,8 @@ next person to read the code or documentation understand what you meant, and
 it's more than likely that the next person will be yourself.
 
 [^octothorpe]: Really, that's its real name, but it's commonly called a
-  "hash" or "hashtag" or "pound" or "number". Musicians might call it a "sharp"
-  in a musical context. Try injecting _that_ into a technical conversation
-  sometime.
+  "hash" or "hashtag" or "pound" or "number". Musicians and Microsoft
+  programmers call it a "sharp".
 
 Let's examine some of these tasks in @lst:makefile_terminal beyond their help text.
 
@@ -169,7 +168,7 @@ statement.
 
 Lines 15-16 provide a way to see only expenses and only those that are not
 normal paycheck deductions such as income taxes and insurances.
-This report is useful to see expenses I actively control, be they automatic
+This report is useful to see expenses you actively control, be they automatic
 bill payments or normal daily transactions.
 It's important to separate these because for those with a savings mentality,
 taxes may be a significant portion of yearly expenses.
@@ -204,7 +203,7 @@ Listing: The finalized basic `Makefile` for a `ledger` project (`Makefile.basic`
 #### Experimentation
 
 Spend some time using the `Makefile` that you've created.
-Rename `ex.ledger` to `2020.ledger`.
+Copy `ex.ledger` to `2020.ledger`.
 Try each of the tasks to get a feel for the output of each.
 If you need to, add some transactions in order to generate data.
 

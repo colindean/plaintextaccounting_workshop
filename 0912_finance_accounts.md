@@ -1,4 +1,4 @@
-## Example Financial Accounts Reference
+## Example Financial Accounts Reference {#sec:fin_acct_ref}
 
 Here are some ideas for how to structure your account tree for tracking your
 finances with `ledger`.
@@ -47,8 +47,10 @@ Expenses:Dogs:Food
 Expenses:Dogs:Medical:Checkup
 Expenses:Dogs:Medical:Medicine
 Expenses:Dogs:Medical:Seresto++# Flea and tick stuff = $$$
+Expenses:Donations:Charitable:ACLU++# Support civil liberties!
 Expenses:Donations:Charitable:AlmaMater++# Support the next generation!
 Expenses:Donations:Charitable:BikePGH++# Support transit!
+Expenses:Donations:Charitable:EqualJusticeInitiative++# Support justice!
 Expenses:Donations:Charitable:CodeAndSupplyFund++# Support conferences!
 Expenses:Donations:Charitable:DiseaseFoundation++# Support the search for a cure!
 Expenses:Donations:Charitable:ElectronicFrontierFoundation++# Support digital rights!
@@ -155,6 +157,5 @@ Income:Unemployment++# Taxable
 Liabilities:CreditCard:<Issuer>:<Type>++# Issuer/Type pair for each card
 Liabilities:Loans:Auto:<Make>:<Model>++# Keep detail for analysis
 Liabilities:Mortgage:<Bank>:<Street>++# Track against Assets:Property:House
-
 
 ```

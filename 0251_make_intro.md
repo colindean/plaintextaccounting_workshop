@@ -75,5 +75,5 @@ Makefiles [^portability], but you've been warned.
 
 [^portability]: Derivatives of `make` have different ways of handling tabs
   versus spaces and provide some different built-in functions.
-  GNU make tends to be the most permissive and user-friendly,
+  GNU make tends to be the most restrictive yet most commonly available,
   thus this author's preference for it in general.
