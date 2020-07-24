@@ -53,5 +53,5 @@ gitadd:
 
 .PHONY: clean
 clean:
-	rm -rf $(HEADER_TEXS) $(HEADER_HTMLS) $(OUTPUTS)
+	rm -rf $(HEADER_TEXS) $(HEADER_HTMLS) $(OUTPUTS) pta_workshop_artifacts.tar.gz
 
