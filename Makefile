@@ -45,7 +45,7 @@ WATCHABLES=Makefile $(MD_FILES) $(CONFIG) $(LEDGER_FILES) $(HEADER_TEXS:%.tex=%.
 
 .PHONY: watch
 watch:
-	ls $(WATCHABLES) $(HEADER_TEXS) | entr -napr make $(PDF_OUTPUT) PATCH=-wip
+	ls $(WATCHABLES) $(HEADER_TEXS) $(HEADER_HTMLS) | entr -napr make all PATCH=-wip
 
 .PHONY: gitadd
 gitadd:
@@ -53,5 +53,5 @@ gitadd:
 
 .PHONY: clean
 clean:
-	rm -rf $(HEADER_TEXS) $(OUTPUTS)
+	rm -rf $(HEADER_TEXS) $(HEADER_HTMLS) $(OUTPUTS)
 
