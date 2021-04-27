@@ -93,6 +93,13 @@ ledger-autosync \
 
 If you run @lst:export_append again, you'll notice that nothing else new was added! `ledger-autosync` successfully used the CSVID it generated to keep from adding transactions it already had converted.
 
+## Rules to keep in mind for synchronizing
+
+1. Synchronize your primary account first.
+2. Synchronize transfer or payment IDs from subsequent accounts that have transfers or payments to or from that primary account _before_ mixing in the other accounts' full records. This ensures that you are tracking both records' IDs in order to prevent duplicate entries. You can _manually_ delete the transfer or payment transactions from your initial conversion against your primary ledger file or you can re-run `ledger-autosync` and it will ignore the IDs that are already present in the ledger file passed as `--ledger`.
+3. Diligently use `; AutosyncPayee: XXX` tags in transactions where you modify the payee. This will enable `ledger-autosync` to find transactions and set the counter-transaction (the expense, generally) automatically. This will save you literally hours of data entry per update session!
+4. Use your editor's autocomplete functionality. [`vim-ledger`](https://github.com/ledger/vim-ledger) lends itself to this with its `Ctrl-X Ctrl-O` autocompletion trigger while in insert mode: it'll look at all account names in the current file by doing `ledger -f - accounts` and build suggestions based on partial matches. `E:E:B` could expand to `Expenses:Electronics:Batteries`. Look how much time that saves in typing alone!
+
 ## Converting with `ledger`
 
 Importing with `ledger` is possible through its `convert` command.
